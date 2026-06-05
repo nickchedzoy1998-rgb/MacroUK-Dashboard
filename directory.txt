@@ -1,0 +1,13 @@
+your-project-name/
+│
+├── data/                  # Local folder for DuckDB file (gitignored)
+│
+├── src/
+│   ├── __init__.py
+│   ├── etl/               # Extraction & loading scripts
+│   ├── api/               # FastAPI backend
+│   └── dashboard/         # Streamlit frontend
+│
+├── requirements.txt       # Project dependencies
+├── .gitignore             # To prevent committing data/env files
+└── README.md
