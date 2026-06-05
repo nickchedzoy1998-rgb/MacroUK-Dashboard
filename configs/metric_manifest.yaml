@@ -1,0 +1,49 @@
+ons_metrics:
+  CPI:
+    cdid: "l55o"
+    dataset: "mm23"
+    name: "Consumer Price Index"
+    unit: "%"
+    frequency: "Monthly"
+  CORE_CPI:
+    cdid: "dkc6"
+    dataset: "mm23"
+    name: "Core Consumer Price Index"
+    unit: "%"
+    frequency: "Monthly"
+  GDP_QOQ:
+    cdid: "ihyq"
+    dataset: "pn2"
+    name: "GDP Quarter-on-Quarter Growth"
+    unit: "%"
+    frequency: "Quarterly"
+  GDP_YOY:
+    cdid: "ihyp"
+    dataset: "pn2"
+    name: "GDP Year-on-Year Growth"
+    unit: "%"
+    frequency: "Quarterly"
+  UNRATE:
+    cdid: "mgsx"
+    dataset: "lms"
+    name: "Unemployment Rate (16+)"
+    unit: "%"
+    frequency: "Monthly"
+  EMPRATE:
+    cdid: "lf24"
+    dataset: "lms"
+    name: "Employment Rate (16-64)"
+    unit: "%"
+    frequency: "Monthly"
+  WAGE_GROWTH:
+    cdid: "kai9"
+    dataset: "lms"
+    name: "Average Weekly Earnings Growth"
+    unit: "%"
+    frequency: "Monthly"
+  HOUSE_PRICE_GROWTH:
+    cdid: "a67u"
+    dataset: "mm23"
+    name: "UK House Price Index Annual Growth"
+    unit: "%"
+    frequency: "Monthly"

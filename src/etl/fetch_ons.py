@@ -1,29 +1,16 @@
-import requests
 import pandas as pd
 import sqlite3
 from pathlib import Path
 
 from src.utilities.config_loader import load_config
+from src.utilities.http_client import extract
+from src.utilities.build_url import build_ons
 
 # Helpers
-ons_url = load_config('endpoints', 'gov', 'inflation')
 database = load_config('settings', 'databases', 'economics_db')
 
 
-def extract(url):
-    "Uses config loader, hits the API, returns JSON."
-    try:
-        response = requests.get(url)
-        response.raise_for_status()
-        return response.json()
-
-    except Exception as e:
-        raise ConnectionError(f'Extract failure: {e}')
-    
-    
 def transform(raw_json):
-    "Takes months key from json & converts to pd df"
-
     months = raw_json.get('months', None)
 
     if months is not None:
@@ -68,15 +55,13 @@ def load(df):
         conn.close()
 
 
+def main():
+    # Build List of metrics to iterate through
+    ons_metrics = []
+
+
+
+
 if __name__ == '__main__':
-    extract_json = extract(ons_url)
-
-    dataframe = transform(extract_json)
-
-    if dataframe is None:
-        print('No dataframe to save')
+    print(load_config('metric_manifest', 'ons_metrics'))
     
-    else:
-        load(dataframe)
-
-    # python -m src.etl.fetch_ons

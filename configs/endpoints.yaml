@@ -1,5 +1,3 @@
-gov:
-  - inflation: "https://www.ons.gov.uk/economy/inflationandpriceindices/timeseries/l55o/mm23/data"
-
-fastapi:
-  - cpi: "http://127.0.0.1:8000/series/cpi"
+base:
+  ons: "https://www.ons.gov.uk/economy/inflationandpriceindices/timeseries/{}/{}/data"
+  fastapi: "http://127.0.0.1:8000/"

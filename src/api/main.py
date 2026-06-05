@@ -45,3 +45,5 @@ async def get_cpi():
         
     except Exception as e:
         raise ConnectionError('Error getting data: {e}')
+    
+# uvicorn src.api.main:app --reload

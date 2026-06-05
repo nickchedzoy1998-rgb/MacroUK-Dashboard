@@ -1,0 +1,14 @@
+# Ignore all compiled Python files
+*.pyc
+
+# Ignore Python cache directories (very common)
+__pycache__/
+
+# Ignore virtual environments (never commit these!)
+.venv/
+venv/
+env/
+
+# Ignore Streamlit's local configuration/secrets if you have them
+.streamlit/config.toml
+.streamlit/secrets.toml
