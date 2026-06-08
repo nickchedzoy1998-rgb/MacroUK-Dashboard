@@ -74,58 +74,58 @@ boe_metrics:
     frequency: "Daily"
   # Exchange Rates & Competitiveness
   STERLING_ERI_MO:
-    series_code: "XUMAERS"
-    name: "Sterling Effective Exchange Rate Index (Monthly Average)"
+    series_code: "XUMABK67"
+    name: "Sterling Effective Exchange Rate Index (Monthly Average, Jan 2005 = 100)"
     unit: "Index"
     frequency: "Monthly"
   USD_GBP_SPOT_MO:
-    series_code: "XUMSUSS"
+    series_code: "XUMAUSS"
     name: "USD per GBP Spot Exchange Rate (Monthly Average)"
     unit: "$"
     frequency: "Monthly"
   EUR_GBP_SPOT_MO:
-    series_code: "XUMSERA"
+    series_code: "XUMAERS"
     name: "EUR per GBP Spot Exchange Rate (Monthly Average)"
-    unit: "€"
+    unit: "EUR"
     frequency: "Monthly"
 
   # Housing Market & Consumer Credit
   MORTGAGE_2YR_75LTV_MO:
-    series_code: "IUMB62A"
+    series_code: "IUMBV34"
     name: "Monthly Average Interest Rate on 2-Year Fixed Rate Mortgages (75% LTV)"
     unit: "%"
     frequency: "Monthly"
   NET_LENDING_DWELLINGS_MO:
-    series_code: "LPMB2MK"
-    name: "Net Lending Securing on Dwellings"
-    unit: "£ Millions"
+    series_code: "LPMVTVJ"
+    name: "Net Secured Lending to Individuals"
+    unit: "GBP Millions"
     frequency: "Monthly"
   NET_CONSUMER_CREDIT_MO:
-    series_code: "LPMB2X2"
-    name: "Net Consumer Credit Excluding Secured Lending"
-    unit: "£ Millions"
+    series_code: "LPMB4TU"
+    name: "Net Consumer Credit Excluding Credit Card Lending"
+    unit: "GBP Millions"
     frequency: "Monthly"
 
   # Monetary Aggregates (Liquidity)
   M4_GROWTH_MO:
-    series_code: "LPMB46A"
-    name: "M4 Money Supply"
+    series_code: "RPMB56Q"
+    name: "M4 Money Supply Growth (Excluding Intermediate OFCs)"
     unit: "%"
     frequency: "Monthly"
   NOTES_COINS_GROWTH_MO:
-    series_code: "LPMB3WH"
-    name: "Notes and Coins in Circulation"
+    series_code: "LPMVQUU"
+    name: "Notes and Coin in Circulation Growth"
     unit: "%"
     frequency: "Monthly"
 
   # Corporate & Business Finance
   NET_LENDING_CORP_MO:
-    series_code: "LPMB74E"
-    name: "Net Lending to UK Non-Financial Businesses"
-    unit: "£ Millions"
+    series_code: "LPMVWNU"
+    name: "Lending to UK Non-Financial Businesses Growth"
+    unit: "%"
     frequency: "Monthly"
   CORP_OVERDRAFT_COST_MO:
-    series_code: "IUMB69A"
-    name: "Average Cost of New Overdraft Facilities to Private Non-Financial Corporations"
+    series_code: "CFMBJ82"
+    name: "Average Cost of New Other Loans to Private Non-Financial Corporations"
     unit: "%"
     frequency: "Monthly"

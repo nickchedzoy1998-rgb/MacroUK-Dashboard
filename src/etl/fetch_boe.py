@@ -47,11 +47,32 @@ def extract():
 def transform(content):
     df = pd.read_csv(io.BytesIO(content))
 
+    dataframes = []
     
+    for m, i in metric_config.items():
+        metric_df = df['DATE', [m['series_code']]]
 
+        metric_df[m['series_code']] = pd.to_numeric(df['value'])
+
+        metric_df['metric_id'] = m
+        metric_df['metric_name'] = m.get('name', None)
+        metric_df['unit'] = m.get('unit', None)
+        metric_df['source'] = 'BOE'
+        metric_df['frequency'] = m.get('frequency', None)
+
+        metric_df = metric_df.rename(columns={
+            'DATE': 'date',
+            m['series_code']: 'value'
+        })
+
+        metric_df['date'] = pd.to_datetime(metric_df['date'])
+
+        metric_df = metric_df[['date', 'metric_id', 'metric_name', 'value', 'unit', 'source', 'frequency']]
+
+        dataframes.append(metric_df)
 
 
 if __name__ == '__main__':
     print(extract())
 
-    #python -m src.etl.fetch_boe
+    # python -m src.etl.fetch_boe
