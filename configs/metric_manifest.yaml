@@ -1,49 +1,131 @@
 ons_metrics:
   CPI:
+    topic: "economy/inflationandpriceindices"
     cdid: "l55o"
     dataset: "mm23"
     name: "Consumer Price Index"
     unit: "%"
     frequency: "Monthly"
   CORE_CPI:
+    topic: "economy/inflationandpriceindices"
     cdid: "dkc6"
     dataset: "mm23"
     name: "Core Consumer Price Index"
     unit: "%"
     frequency: "Monthly"
   GDP_QOQ:
+    topic: "economy/grossdomesticproductgdp"
     cdid: "ihyq"
     dataset: "pn2"
     name: "GDP Quarter-on-Quarter Growth"
     unit: "%"
     frequency: "Quarterly"
   GDP_YOY:
+    topic: "economy/grossdomesticproductgdp"
     cdid: "ihyp"
     dataset: "pn2"
     name: "GDP Year-on-Year Growth"
     unit: "%"
-    frequency: "Quarterly"
+    frequency: "Yearly"
   UNRATE:
+    topic: "employmentandlabourmarket/peoplenotinwork/unemployment"
     cdid: "mgsx"
     dataset: "lms"
     name: "Unemployment Rate (16+)"
     unit: "%"
     frequency: "Monthly"
   EMPRATE:
+    topic: "employmentandlabourmarket/peopleinwork/employmentandemployeetypes"
     cdid: "lf24"
     dataset: "lms"
     name: "Employment Rate (16-64)"
     unit: "%"
     frequency: "Monthly"
   WAGE_GROWTH:
+    topic: "employmentandlabourmarket/peopleinwork/earningsandworkinghours"
     cdid: "kai9"
     dataset: "lms"
     name: "Average Weekly Earnings Growth"
     unit: "%"
     frequency: "Monthly"
   HOUSE_PRICE_GROWTH:
-    cdid: "a67u"
+    topic: "economy/inflationandpriceindices"
+    cdid: "czbl"
     dataset: "mm23"
-    name: "UK House Price Index Annual Growth"
+    name: "Housing Cost Inflation (YoY % Change)"
+    unit: "%"
+    frequency: "Monthly"
+
+boe_metrics:
+  BANK_RATE_DA:
+    series_code: "IUDBEDR"
+    name: "Official Bank Rate (Daily)"
+    unit: "%"
+    frequency: "Daily"
+  BANK_RATE_MO:
+    series_code: "IUMABEDR"
+    name: "Official Bank Rate (Monthly average)"
+    unit: "%"
+    frequency: "Monthly"
+  SONIA:
+    series_code: "IUDSOIA"
+    name: "(Sterling Overnight Index Average) Interest Rate"
+    unit: "%"
+    frequency: "Daily"
+  # Exchange Rates & Competitiveness
+  STERLING_ERI_MO:
+    series_code: "XUMAERS"
+    name: "Sterling Effective Exchange Rate Index (Monthly Average)"
+    unit: "Index"
+    frequency: "Monthly"
+  USD_GBP_SPOT_MO:
+    series_code: "XUMSUSS"
+    name: "USD per GBP Spot Exchange Rate (Monthly Average)"
+    unit: "$"
+    frequency: "Monthly"
+  EUR_GBP_SPOT_MO:
+    series_code: "XUMSERA"
+    name: "EUR per GBP Spot Exchange Rate (Monthly Average)"
+    unit: "€"
+    frequency: "Monthly"
+
+  # Housing Market & Consumer Credit
+  MORTGAGE_2YR_75LTV_MO:
+    series_code: "IUMB62A"
+    name: "Monthly Average Interest Rate on 2-Year Fixed Rate Mortgages (75% LTV)"
+    unit: "%"
+    frequency: "Monthly"
+  NET_LENDING_DWELLINGS_MO:
+    series_code: "LPMB2MK"
+    name: "Net Lending Securing on Dwellings"
+    unit: "£ Millions"
+    frequency: "Monthly"
+  NET_CONSUMER_CREDIT_MO:
+    series_code: "LPMB2X2"
+    name: "Net Consumer Credit Excluding Secured Lending"
+    unit: "£ Millions"
+    frequency: "Monthly"
+
+  # Monetary Aggregates (Liquidity)
+  M4_GROWTH_MO:
+    series_code: "LPMB46A"
+    name: "M4 Money Supply"
+    unit: "%"
+    frequency: "Monthly"
+  NOTES_COINS_GROWTH_MO:
+    series_code: "LPMB3WH"
+    name: "Notes and Coins in Circulation"
+    unit: "%"
+    frequency: "Monthly"
+
+  # Corporate & Business Finance
+  NET_LENDING_CORP_MO:
+    series_code: "LPMB74E"
+    name: "Net Lending to UK Non-Financial Businesses"
+    unit: "£ Millions"
+    frequency: "Monthly"
+  CORP_OVERDRAFT_COST_MO:
+    series_code: "IUMB69A"
+    name: "Average Cost of New Overdraft Facilities to Private Non-Financial Corporations"
     unit: "%"
     frequency: "Monthly"

@@ -29,12 +29,34 @@ async def health_check():
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
             content={"status": "unhealthy", "database": f"disconnected: {str(e)}"}
         )
-
-@app.get("/series/cpi")
-async def get_cpi():
+    
+@app.get("/series")
+async def get_series():
     try:
         conn = sqlite3.connect(DB_PATH)
-        data = pd.read_sql_query("SELECT * FROM economic_series WHERE metric_id = 'CPI';", conn)
+        data = pd.read_sql_query("SELECT * FROM economic_series ORDER BY metric_id, date;", conn)
+
+        if data.empty:
+            return []
+                                 
+        data_json_dict = data.to_dict(orient='records')
+        
+        return data_json_dict
+        
+    except Exception as e:
+        raise ConnectionError('Error getting data: {e}')
+    
+
+# Temp Function for Debugging
+@app.get("/series/{metric_id}")
+async def get_series(metric_id: str):
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        data = pd.read_sql_query(
+            "SELECT * FROM economic_series WHERE metric_id = ?;", 
+            conn, 
+            params=(metric_id.upper(),)
+        )
 
         if data.empty:
             return []

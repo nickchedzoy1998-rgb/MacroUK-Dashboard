@@ -1,3 +1,4 @@
 base:
-  ons: "https://www.ons.gov.uk/economy/inflationandpriceindices/timeseries/{}/{}/data"
-  fastapi: "http://127.0.0.1:8000/"
+  ons: "https://www.ons.gov.uk/{}/timeseries/{}/{}/data"
+  fastapi: "http://127.0.0.1:8000/series"
+  boe: "https://www.bankofengland.co.uk/boeapps/iadb/fromshowcolumns.asp?csv.x=yes"

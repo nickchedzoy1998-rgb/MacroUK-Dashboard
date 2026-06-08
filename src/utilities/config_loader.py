@@ -14,4 +14,4 @@ def load_config(yaml_file, source: str, name = None):
 
 
 if __name__ == '__main__':
-    print(load_config('metric_manifest', 'ons_metrics'))
+    print(load_config('metric_manifest', 'boe_metrics').keys())

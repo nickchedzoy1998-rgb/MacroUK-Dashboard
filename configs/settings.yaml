@@ -1,2 +1,2 @@
 databases:
-  - economics_db: "economic_warehouse"
+  economics_db: "economic_warehouse"

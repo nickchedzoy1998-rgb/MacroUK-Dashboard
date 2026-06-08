@@ -12,3 +12,6 @@ env/
 # Ignore Streamlit's local configuration/secrets if you have them
 .streamlit/config.toml
 .streamlit/secrets.toml
+src/utilities/__pycache__/config_loader.cpython-311.pyc
+src/etl/__pycache__/fetch_ons.cpython-311.pyc
+src/etl/__pycache__/fetch_ons.cpython-311.pyc
