@@ -1,3 +1,4 @@
+### OFFICE for NATIONAL STATISTICS (ONS) METRICS ###
 ons_metrics:
   CPI:
     topic: "economy/inflationandpriceindices"
@@ -55,7 +56,22 @@ ons_metrics:
     name: "Housing Cost Inflation (YoY % Change)"
     unit: "%"
     frequency: "Monthly"
+  BUSINESS_CONF:
+    topic: "businessindustryandtrade/business/businesssurvey"
+    cdid: "b5a2"
+    dataset: "bsa"
+    name: "Business Confidence Indicator"
+    unit: "Index"
+    frequency: "Monthly"
+  CONSUMER_CONF:
+    topic: "economy/consumerconfidenceandbehaviour/consumerconfidence"
+    cdid: "c6a2"
+    dataset: "ccs"
+    name: "Consumer Confidence Indicator"
+    unit: "Index"
+    frequency: "Monthly"
 
+### BANK OF ENGLAND METRICS ###
 boe_metrics:
   BANK_RATE_DA:
     series_code: "IUDBEDR"
@@ -72,7 +88,6 @@ boe_metrics:
     name: "(Sterling Overnight Index Average) Interest Rate"
     unit: "%"
     frequency: "Daily"
-  # Exchange Rates & Competitiveness
   STERLING_ERI_MO:
     series_code: "XUMABK67"
     name: "Sterling Effective Exchange Rate Index (Monthly Average, Jan 2005 = 100)"
@@ -88,8 +103,6 @@ boe_metrics:
     name: "EUR per GBP Spot Exchange Rate (Monthly Average)"
     unit: "EUR"
     frequency: "Monthly"
-
-  # Housing Market & Consumer Credit
   MORTGAGE_2YR_75LTV_MO:
     series_code: "IUMBV34"
     name: "Monthly Average Interest Rate on 2-Year Fixed Rate Mortgages (75% LTV)"
@@ -105,8 +118,6 @@ boe_metrics:
     name: "Net Consumer Credit Excluding Credit Card Lending"
     unit: "GBP Millions"
     frequency: "Monthly"
-
-  # Monetary Aggregates (Liquidity)
   M4_GROWTH_MO:
     series_code: "RPMB56Q"
     name: "M4 Money Supply Growth (Excluding Intermediate OFCs)"
@@ -117,8 +128,6 @@ boe_metrics:
     name: "Notes and Coin in Circulation Growth"
     unit: "%"
     frequency: "Monthly"
-
-  # Corporate & Business Finance
   NET_LENDING_CORP_MO:
     series_code: "LPMVWNU"
     name: "Lending to UK Non-Financial Businesses Growth"
@@ -129,3 +138,413 @@ boe_metrics:
     name: "Average Cost of New Other Loans to Private Non-Financial Corporations"
     unit: "%"
     frequency: "Monthly"
+
+### YAHOO FINANCE METRICS ###
+y_finance_metrics:
+  GILT_2Y:
+    ticker: "GB2YT=RR"
+    name: "2-Year UK Gilt Yield"
+    unit: "%"
+    frequency: "Daily"
+  GILT_5Y:
+    ticker: "GB5YT=RR"
+    name: "5-Year UK Gilt Yield"
+    unit: "%"
+    frequency: "Daily"
+  GILT_10Y:
+    ticker: "GB10YT=RR"
+    name: "10-Year UK Gilt Yield"
+    unit: "%"
+    frequency: "Daily"
+  GILT_30Y:
+    ticker: "GB30YT=RR"
+    name: "30-Year UK Gilt Yield"
+    unit: "%"
+    frequency: "Daily"
+  FX_GBP_USD:
+    ticker: "GBPUSD=X"
+    name: "GBP/USD Exchange Rate"
+    unit: "USD"
+    frequency: "Daily"
+  FX_GBP_EUR:
+    ticker: "GBPEUR=X"
+    name: "GBP/EUR Exchange Rate"
+    unit: "EUR"
+    frequency: "Daily"
+  FX_GBP_JPY:
+    ticker: "GBPJPY=X"
+    name: "GBP/JPY Exchange Rate"
+    unit: "JPY"
+    frequency: "Daily"
+  FX_GBP_CHF:
+    ticker: "GBPCHF=X"
+    name: "GBP/CHF Exchange Rate"
+    unit: "CHF"
+    frequency: "Daily"
+  FX_GBP_AUD:
+    ticker: "GBPAUD=X"
+    name: "GBP/AUD Exchange Rate"
+    unit: "AUD"
+    frequency: "Daily"
+  FX_GBP_CAD:
+    ticker: "GBPCAD=X"
+    name: "GBP/CAD Exchange Rate"
+    unit: "CAD"
+    frequency: "Daily"
+  FX_GBP_CNY:
+    ticker: "GBPCNY=X"
+    name: "GBP/CNY Exchange Rate"
+    unit: "CNY"
+    frequency: "Daily"
+  FX_SERI:
+    ticker: "SERIX=X"
+    name: "Sterling Exchange Rate Index (SERI)"
+    unit: "Index"
+    frequency: "Daily"
+  FTSE_100:
+    ticker: "^FTSE"
+    name: "FTSE 100 Index"
+    unit: "Index"
+    frequency: "Daily"
+  FTSE_250:
+    ticker: "^FTMC"
+    name: "FTSE 250 Index"
+    unit: "Index"
+    frequency: "Daily"
+  FTSE_AIM:
+    ticker: "^FTAI"
+    name: "FTSE AIM All-Share Index"
+    unit: "Index"
+    frequency: "Daily"
+  FTSE_ALL_SHARE:
+    ticker: "^FTAS"
+    name: "FTSE All-Share Index"
+    unit: "Index"
+    frequency: "Daily"
+  TSCO_L:
+    ticker: "TSCO.L"
+    name: "Tesco PLC Share Price"
+    unit: "GBP"
+    frequency: "Daily"
+  SBRY_L:
+    ticker: "SBRY.L"
+    name: "Sainsbury's PLC Share Price"
+    unit: "GBP"
+    frequency: "Daily"
+  BA_L:
+    ticker: "BA.L"
+    name: "BAE Systems PLC Share Price"
+    unit: "GBP"
+    frequency: "Daily"
+  RR_L:
+    ticker: "RR.L"
+    name: "Rolls-Royce Holdings PLC Share Price"
+    unit: "GBP"
+    frequency: "Daily"
+  SGE_L:
+    ticker: "SGE.L"
+    name: "Sage Group PLC Share Price"
+    unit: "GBP"
+    frequency: "Daily"
+  O2D_L:
+    ticker: "O2D.L"
+    name: "UK Tech Infrastructure Trend Proxy Share Price"
+    unit: "GBP"
+    frequency: "Daily"
+  ETF_UK_CORP_BONDS:
+    ticker: "SLXX.L"
+    name: "iShares UK Corporate Bond ETF"
+    unit: "Index"
+    frequency: "Daily"
+  ETF_UK_HIGH_YIELD:
+    ticker: "IHYG.L"
+    name: "iShares UK High Yield Corporate Bond ETF"
+    unit: "Index"
+    frequency: "Daily"
+  ETF_UK_GILT:
+    ticker: "IGLT.L"
+    name: "iShares UK Gilts ETF"
+    unit: "Index"
+    frequency: "Daily"
+  ETF_UK_TIPS:
+    ticker: "ITIP.L"
+    name: "iShares UK Inflation-Linked Gilts ETF"
+    unit: "Index"
+    frequency: "Daily"
+  ETF_UK_SHORT_DUR_CORP:
+    ticker: "SLQD.L"
+    name: "iShares UK Short Duration Corporate Bond ETF"
+    unit: "Index"
+    frequency: "Daily"
+  EQ_TW:
+    ticker: "TW.L"
+    name: "Taylor Wimpey PLC (UK Homebuilder)"
+    unit: "GBP"
+    frequency: "Daily"
+  EQ_BKG:
+    ticker: "BARC.L"
+    name: "Barclays PLC (UK Bank)"
+    unit: "GBP"
+    frequency: "Daily"
+  EQ_RIO:
+    ticker: "RIO.L"
+    name: "Rio Tinto PLC (UK Mining)"
+    unit: "GBP"
+    frequency: "Daily"
+  EQ_BP:
+    ticker: "BP.L"
+    name: "BP PLC (UK Energy)"
+    unit: "GBP"
+    frequency: "Daily"
+  EQ_GSK:
+    ticker: "GSK.L"
+    name: "GlaxoSmithKline PLC (UK Healthcare)"
+    unit: "GBP"
+    frequency: "Daily"
+  EQ_BAR:
+    ticker: "BDEV.L"
+    name: "Barratt Redrow PLC (UK Homebuilder)"
+    unit: "GBP"
+    frequency: "Daily"
+  COM_OIL_WTI:
+    ticker: "CL=F"
+    name: "WTI Crude Oil Price"
+    unit: "USD per barrel"
+    frequency: "Daily"
+  COM_OIL_BRENT:
+    ticker: "BZ=F"
+    name: "Brent Crude Oil Price"
+    unit: "USD per barrel"
+    frequency: "Daily"
+  COM_GOLD:
+    ticker: "GC=F"
+    name: "Gold Price"
+    unit: "USD per ounce"
+    frequency: "Daily"
+
+### HM LAND REGISTRY METRICS ###
+hmlr_metrics:
+  UK_HPI_AVG_PRICE_UK:
+    region: "united-kingdom"
+    field: "averagePrice"
+    name: "Average Property Price (UK Baseline)"
+    unit: "GBP"
+    frequency: "Monthly"
+  UK_HPI_INDEX_UK:
+    region: "united-kingdom"
+    field: "housePriceIndex"
+    name: "House Price Index Score (UK)"
+    unit: "Index"
+    frequency: "Monthly"
+  UK_HPI_YOY_CHANGE_UK:
+    region: "united-kingdom"
+    field: "percentageChange"
+    name: "Annual Property Price Inflation (UK)"
+    unit: "%"
+    frequency: "Monthly"
+  UK_HPI_AVG_PRICE_LONDON:
+    region: "greater-london"
+    field: "averagePrice"
+    name: "Average Property Price (Greater London)"
+    unit: "GBP"
+    frequency: "Monthly"
+  UK_HPI_AVG_PRICE_NW:
+    region: "north-west"
+    field: "averagePrice"
+    name: "Average Property Price (North West)"
+    unit: "GBP"
+    frequency: "Monthly"
+  UK_HPI_VOLUME_UK:
+    region: "united-kingdom"
+    field: "salesVolume"
+    name: "Total Settled Property Transaction Volume"
+    unit: "Transactions"
+    frequency: "Monthly"
+  UK_HPI_FTB_AVG_PRICE:
+    region: "united-kingdom"
+    field: "firstTimeBuyerAveragePrice"
+    name: "First-Time Buyer Average Price"
+    unit: "GBP"
+    frequency: "Monthly"
+  UK_HPI_FOO_AVG_PRICE:
+    region: "united-kingdom"
+    field: "formerOwnerOccupierAveragePrice"
+    name: "Former Owner-Occupier Average Price"
+    unit: "GBP"
+    frequency: "Monthly"
+  UK_HPI_CASH_AVG_PRICE:
+    region: "united-kingdom"
+    field: "cashAveragePrice"
+    name: "Average Price Paid by Cash Buyers"
+    unit: "GBP"
+    frequency: "Monthly"
+  UK_HPI_MORTGAGE_AVG_PRICE:
+    region: "united-kingdom"
+    field: "mortgageAveragePrice"
+    name: "Average Price Paid by Mortgage Buyers"
+    unit: "GBP"
+    frequency: "Monthly"
+  UK_HPI_CASH_SALES_VOL:
+    region: "united-kingdom"
+    field: "cashSalesVolume"
+    name: "Cash-Financed Sales Volume"
+    unit: "Transactions"
+    frequency: "Monthly"
+  UK_HPI_MORTGAGE_SALES_VOL:
+    region: "united-kingdom"
+    field: "mortgageSalesVolume"
+    name: "Mortgage-Financed Sales Volume"
+    unit: "Transactions"
+    frequency: "Monthly"
+
+### HM TREASURY (HMT) &amp; FISCAL TARGET METRICS ###
+hmt_metrics:
+  CONSENSUS_GDP_CY:
+    gov_collection: "data-forecasts"
+    metric_key: "median_gdp_current_year"
+    name: "Independent Consensus GDP Growth (Current Year)"
+    unit: "%"
+    frequency: "Monthly"
+  CONSENSUS_GDP_NY:
+    gov_collection: "data-forecasts"
+    metric_key: "median_gdp_next_year"
+    name: "Independent Consensus GDP Growth (Next Year)"
+    unit: "%"
+    frequency: "Monthly"
+  CONSENSUS_CPI_CY:
+    gov_collection: "data-forecasts"
+    metric_key: "median_cpi_current_year"
+    name: "Independent Consensus CPI Inflation (Current Year)"
+    unit: "%"
+    frequency: "Monthly"
+  CONSENSUS_RPI_CY:
+    gov_collection: "data-forecasts"
+    metric_key: "median_rpi_current_year"
+    name: "Independent Consensus RPI Inflation (Current Year)"
+    unit: "%"
+    frequency: "Monthly"
+  CONSENSUS_UNRATE_CY:
+    gov_collection: "data-forecasts"
+    metric_key: "median_unemployment_current_year"
+    name: "Independent Consensus Unemployment Rate (Current Year)"
+    unit: "%"
+    frequency: "Monthly"
+  CONSENSUS_CLAIMANT_COUNT:
+    gov_collection: "data-forecasts"
+    metric_key: "median_claimant_count_current_year"
+    name: "Independent Consensus Claimant Count Forecast"
+    unit: "Thousands"
+    frequency: "Monthly"
+  CONSENSUS_CURRENT_ACCOUNT:
+    gov_collection: "data-forecasts"
+    metric_key: "median_current_account_balance"
+    name: "Independent Consensus Current Account Balance Forecast"
+    unit: "GBP Billions"
+    frequency: "Monthly"
+
+  PUBLIC_SECTOR_NET_BORROWING:
+    ons_dataset: "publicsectorfinances"
+    cdid: "J5II"
+    name: "Public Sector Net Borrowing (PSNB Ex)"
+    unit: "GBP Billions"
+    frequency: "Monthly"
+  PUBLIC_SECTOR_NET_DEBT_PCT:
+    ons_dataset: "publicsectorfinances"
+    cdid: "HF6X"
+    name: "Public Sector Net Debt as a % of Nominal GDP"
+    unit: "%"
+    frequency: "Monthly"
+  CGNCR_OUTTURN:
+    ons_dataset: "publicsectorfinances"
+    cdid: "RURQ"
+    name: "Central Government Net Cash Requirement (CGNCR)"
+    unit: "GBP Millions"
+    frequency: "Monthly"
+
+  REMIT_TOTAL_GILT_ISSUANCE:
+    source: "debt-management-office"
+    table: "gilt_remit_summary"
+    field: "gross_gilt_sales_required"
+    name: "Total Annual Net Gilt Issuance Target"
+    unit: "GBP Millions"
+    frequency: "Annually"
+  REMIT_INDEX_LINKED_PCT:
+    source: "debt-management-office"
+    table: "gilt_remit_proportions"
+    field: "index_linked_gilt_proportion"
+    name: "Planned Index-Linked Gilts Issuance Share"
+    unit: "%"
+    frequency: "Annually"
+  REMIT_SHORT_CONVENTIONAL:
+    source: "debt-management-office"
+    table: "gilt_remit_breakdown"
+    field: "short_conventional_gilt_target"
+    name: "Annual Issuance Target: Short Conventional Gilts"
+    unit: "GBP Billions"
+    frequency: "Annually"
+  REMIT_MED_CONVENTIONAL:
+    source: "debt-management-office"
+    table: "gilt_remit_breakdown"
+    field: "medium_conventional_gilt_target"
+    name: "Annual Issuance Target: Medium Conventional Gilts"
+    unit: "GBP Billions"
+    frequency: "Annually"
+  REMIT_LONG_CONVENTIONAL:
+    source: "debt-management-office"
+    table: "gilt_remit_breakdown"
+    field: "long_conventional_gilt_target"
+    name: "Annual Issuance Target: Long Conventional Gilts"
+    unit: "GBP Billions"
+    frequency: "Annually"
+  REMIT_GREEN_GILTS:
+    source: "debt-management-office"
+    table: "gilt_remit_breakdown"
+    field: "green_gilt_target"
+    name: "Annual Issuance Target: Sovereign Green Gilts"
+    unit: "GBP Billions"
+    frequency: "Annually"
+
+  DMO_AUCTION_COVER_RATIO:
+    source: "debt-management-office"
+    table: "auction_results_rolling"
+    field: "bid_to_cover_ratio_average"
+    name: "Average Gilt Auction Bid-to-Cover Ratio"
+    unit: "Ratio"
+    frequency: "Weekly"
+
+  FISCAL_THRESHOLD_PERSONAL_ALLOWANCE:
+    source: "hm-treasury-policy"
+    table: "income_tax_bands"
+    field: "personal_allowance_limit"
+    name: "Income Tax Personal Allowance Threshold"
+    unit: "GBP"
+    frequency: "Annually"
+  FISCAL_THRESHOLD_HIGHER_RATE:
+    source: "hm-treasury-policy"
+    table: "income_tax_bands"
+    field: "higher_rate_threshold"
+    name: "Higher Rate Tax Threshold (40%)"
+    unit: "GBP"
+    frequency: "Annually"
+  FISCAL_THRESHOLD_CORP_TAX:
+    source: "hm-treasury-policy"
+    table: "corporate_tax_bands"
+    field: "main_rate_pct"
+    name: "Main Rate of Corporation Tax"
+    unit: "%"
+    frequency: "Annually"
+
+  PESA_DEPARTMENTAL_OUTTURN_TOTAL:
+    source: "hm-treasury-pesa"
+    table: "public_spending_aggregates"
+    field: "total_del_outturn"
+    name: "Total Active Departmental Spending Outturn"
+    unit: "GBP Billions"
+    frequency: "Quarterly"
+  HMT_CONTINGENT_LIABILITIES:
+    source: "hm-treasury-annual-report"
+    table: "remote_contingent_liabilities"
+    field: "total_quantifiable_liabilities"
+    name: "Total Government Quantifiable Contingent Liabilities"
+    unit: "GBP Billions"
+    frequency: "Annually"
