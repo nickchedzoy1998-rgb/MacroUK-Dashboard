@@ -46,7 +46,9 @@ def transform(raw_json, m, m_config):
 
 
 
-        df['value'] = pd.to_numeric(df['value'])
+        df['value'] = pd.to_numeric(df['value'], errors='coerce')
+        df['date'] = df['date'].dt.date
+        df = df.dropna(subset=['value'])
 
         df['metric_id'] = m
         df['metric_name'] = m_config.get('name', None)
@@ -61,11 +63,34 @@ def transform(raw_json, m, m_config):
     return None
 
 
+def _ensure_target_table(conn):
+    """Ensure the economic_series table exists with a uniqueness constraint."""
+    conn.execute(
+        """
+        CREATE TABLE IF NOT EXISTS economic_series (
+            date TEXT,
+            metric_id TEXT,
+            metric_name TEXT,
+            value REAL,
+            unit TEXT,
+            source TEXT,
+            frequency TEXT,
+            PRIMARY KEY (date, metric_id, source)
+        )
+        """
+    )
+
+
 def load(df):
-    """Write a combined economic series dataframe to the configured SQLite database."""
+    """Write a combined economic series dataframe to the configured SQLite database.
+
+    This implementation avoids duplicate inserts for repeated pipeline runs.
+    """
     if df is None or df.empty:
         print("No data to load.")
         return
+
+    df = df.drop_duplicates(subset=['date', 'metric_id', 'source'])
 
     Path("data").mkdir(exist_ok=True)
     db_path = Path("data") / (database + ".db")
@@ -73,9 +98,14 @@ def load(df):
     conn = sqlite3.connect(db_path)
 
     try:
-        df.to_sql(
-            "economic_series", con=conn, if_exists="replace", index=False
+        _ensure_target_table(conn)
+        df.to_sql("economic_series_tmp", con=conn, if_exists="replace", index=False)
+        conn.execute(
+            "INSERT OR IGNORE INTO economic_series (date, metric_id, metric_name, value, unit, source, frequency)"
+            " SELECT date, metric_id, metric_name, value, unit, source, frequency FROM economic_series_tmp"
         )
+        conn.execute("DROP TABLE IF EXISTS economic_series_tmp")
+        conn.commit()
 
         print(f"Successfully loaded {len(df)} rows into SQLite.")
 
