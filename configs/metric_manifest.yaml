@@ -141,25 +141,15 @@ boe_metrics:
 
 ### YAHOO FINANCE METRICS ###
 y_finance_metrics:
-  GILT_2Y:
-    ticker: "GB2YT=RR"
-    name: "2-Year UK Gilt Yield"
-    unit: "%"
+  GILT_10Y_INDEX:
+    ticker: "BG07.L"
+    name: "FTSE UK Gilt 10-15 Year Index (Duration-Specific Proxy)"
+    unit: "Index"
     frequency: "Daily"
-  GILT_5Y:
-    ticker: "GB5YT=RR"
-    name: "5-Year UK Gilt Yield"
-    unit: "%"
-    frequency: "Daily"
-  GILT_10Y:
-    ticker: "GB10YT=RR"
-    name: "10-Year UK Gilt Yield"
-    unit: "%"
-    frequency: "Daily"
-  GILT_30Y:
-    ticker: "GB30YT=RR"
-    name: "30-Year UK Gilt Yield"
-    unit: "%"
+  GILT_CORE:
+    ticker: "IGLT.L"
+    name: "iShares Core UK Gilts ETF (Broad UK Gilts Proxy)"
+    unit: "GBP"
     frequency: "Daily"
   FX_GBP_USD:
     ticker: "GBPUSD=X"
@@ -190,16 +180,6 @@ y_finance_metrics:
     ticker: "GBPCAD=X"
     name: "GBP/CAD Exchange Rate"
     unit: "CAD"
-    frequency: "Daily"
-  FX_GBP_CNY:
-    ticker: "GBPCNY=X"
-    name: "GBP/CNY Exchange Rate"
-    unit: "CNY"
-    frequency: "Daily"
-  FX_SERI:
-    ticker: "SERIX=X"
-    name: "Sterling Exchange Rate Index (SERI)"
-    unit: "Index"
     frequency: "Daily"
   FTSE_100:
     ticker: "^FTSE"
@@ -246,42 +226,37 @@ y_finance_metrics:
     name: "Sage Group PLC Share Price"
     unit: "GBP"
     frequency: "Daily"
-  O2D_L:
-    ticker: "O2D.L"
-    name: "UK Tech Infrastructure Trend Proxy Share Price"
+  VPNG_L:
+    ticker: "VPNG.L"
+    name: "Global Data Centre & Digital Infrastructure ETF (Trend Proxy)"
     unit: "GBP"
-    frequency: "Daily"
-  ETF_UK_CORP_BONDS:
-    ticker: "SLXX.L"
-    name: "iShares UK Corporate Bond ETF"
-    unit: "Index"
     frequency: "Daily"
   ETF_UK_HIGH_YIELD:
     ticker: "IHYG.L"
-    name: "iShares UK High Yield Corporate Bond ETF"
-    unit: "Index"
+    name: "Shares Global High Yield Corporate Bond ETF"
+    unit: "GBP"
     frequency: "Daily"
   ETF_UK_GILT:
     ticker: "IGLT.L"
     name: "iShares UK Gilts ETF"
-    unit: "Index"
+    unit: "GBP"
     frequency: "Daily"
   ETF_UK_TIPS:
-    ticker: "ITIP.L"
-    name: "iShares UK Inflation-Linked Gilts ETF"
-    unit: "Index"
+    ticker: "INXG.L"
+    name: "iShares £ Index-Linked Gilts UCITS ETF"
+    unit: "GBP"
     frequency: "Daily"
-  ETF_UK_SHORT_DUR_CORP:
-    ticker: "SLQD.L"
-    name: "iShares UK Short Duration Corporate Bond ETF"
-    unit: "Index"
+  ETF_UK_CORP_BOND:
+    ticker: "SLXX.L"
+    name: "iShares GBP Corporate Bond ETF"
+    unit: "GBP"
     frequency: "Daily"
   EQ_TW:
     ticker: "TW.L"
     name: "Taylor Wimpey PLC (UK Homebuilder)"
     unit: "GBP"
     frequency: "Daily"
-  EQ_BKG:
+  EQ_BARC:
     ticker: "BARC.L"
     name: "Barclays PLC (UK Bank)"
     unit: "GBP"
@@ -302,7 +277,7 @@ y_finance_metrics:
     unit: "GBP"
     frequency: "Daily"
   EQ_BAR:
-    ticker: "BDEV.L"
+    ticker: "BTRW.L"
     name: "Barratt Redrow PLC (UK Homebuilder)"
     unit: "GBP"
     frequency: "Daily"
