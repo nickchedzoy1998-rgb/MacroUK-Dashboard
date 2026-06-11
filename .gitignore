@@ -12,7 +12,9 @@ env/
 # Ignore Streamlit's local configuration/secrets if you have them
 .streamlit/config.toml
 .streamlit/secrets.toml
+
+# Ignore generated local databases
+data/*.db
 src/utilities/__pycache__/config_loader.cpython-311.pyc
 src/etl/__pycache__/fetch_ons.cpython-311.pyc
 src/etl/__pycache__/fetch_ons.cpython-311.pyc
-src/utilities/__pycache__/config_loader.cpython-311.pyc
