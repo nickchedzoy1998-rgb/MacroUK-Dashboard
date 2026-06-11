@@ -141,11 +141,6 @@ boe_metrics:
 
 ### YAHOO FINANCE METRICS ###
 y_finance_metrics:
-  GILT_10Y_INDEX:
-    ticker: "BG07.L"
-    name: "FTSE UK Gilt 10-15 Year Index (Duration-Specific Proxy)"
-    unit: "Index"
-    frequency: "Daily"
   GILT_CORE:
     ticker: "IGLT.L"
     name: "iShares Core UK Gilts ETF (Broad UK Gilts Proxy)"

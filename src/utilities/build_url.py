@@ -9,7 +9,6 @@ def build_ons(metric: str):
 
     return base_url.format(metric_config['topic'], metric_config['cdid'], metric_config['dataset'])
 
-
 if __name__ == '__main__':
     pass
 
