@@ -1,10 +1,12 @@
 """Extract, transform, and load configured HM Land Registry metrics into SQLite."""
 
 import sqlite3
+from datetime import date
 from pathlib import Path
 
 import pandas as pd
 
+from src.etl.db_utils import get_latest_date
 from src.utilities.config_loader import load_config
 from src.utilities.http_client import fetch_json
 
@@ -21,12 +23,19 @@ def build_hmlr_url(year_month: str, region: str) -> str:
     return endpoint.format(year=year, month=month, region=region)
 
 
-def month_range(start: str = "1995-01") -> list[str]:
+def month_range(start: str = "1995-01", from_date: date | None = None) -> list[str]:
     """Return monthly period strings from the start month through the current month."""
-    start_date = pd.to_datetime(f"{start}-01")
+    if from_date is not None:
+        start_date = pd.to_datetime(from_date).normalize().replace(day=1)
+    else:
+        start_date = pd.to_datetime(f"{start}-01")
+
     current_month = pd.Timestamp.today().normalize().replace(day=1)
 
-    return [date.strftime("%Y-%m") for date in pd.date_range(start_date, current_month, freq="MS")]
+    if start_date > current_month:
+        return []
+
+    return [d.strftime("%Y-%m") for d in pd.date_range(start_date, current_month, freq="MS")]
 
 
 def extract_month_region(year_month: str, region: str):
@@ -48,7 +57,13 @@ def _first_result_item(raw_json):
     if not raw_json:
         return None
 
-    items = raw_json.get("result", {}).get("items", [])
+    result = raw_json.get("result", {})
+    primary_topic = result.get("primaryTopic")
+
+    if isinstance(primary_topic, dict):
+        return primary_topic
+
+    items = result.get("items", [])
 
     if not items:
         return None
@@ -95,7 +110,18 @@ def combine():
     response_cache = {}
     regions = sorted({details["region"] for details in metric_config.values()})
 
-    for year_month in month_range():
+    latest = get_latest_date(source='HMLR')
+    if latest is not None:
+        start_month = (pd.to_datetime(latest).normalize().replace(day=1) + pd.offsets.MonthBegin(1)).date()
+    else:
+        start_month = None
+
+    months = month_range(from_date=start_month)
+    if not months:
+        print("HMLR ETL: no new months to fetch.")
+        return None
+
+    for year_month in months:
         date = pd.to_datetime(f"{year_month}-01").date()
 
         for region in regions:

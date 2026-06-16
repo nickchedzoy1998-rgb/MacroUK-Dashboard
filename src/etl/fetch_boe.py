@@ -8,15 +8,31 @@ into the configured SQLite database.
 import pandas as pd
 import sqlite3
 import requests
-from datetime import datetime
+from datetime import datetime, timedelta
 import io
 from pathlib import Path
 
+from src.etl.db_utils import get_latest_date
 from src.utilities.config_loader import load_config
 
 # Helpers
 database = load_config('settings', 'databases', 'economics_db')
 metric_config = load_config('metric_manifest', 'boe_metrics')
+
+
+def _get_extract_from_date() -> str | None:
+    latest = get_latest_date(source='BOE')
+
+    if latest is None:
+        start_date = datetime(1989, 1, 1).date()
+    else:
+        start_date = latest + timedelta(days=1)
+
+    today = datetime.now().date()
+    if start_date > today:
+        return None
+
+    return start_date.strftime("%d/%b/%Y")
 
 
 def extract():
@@ -27,20 +43,26 @@ def extract():
         None: If the request fails.
     """
     endpoint = load_config('endpoints', 'base', 'boe')
+    date_from = _get_extract_from_date()
+
+    if date_from is None:
+        print("BOE ETL: no new date range to fetch.")
+        return None
+
     now = datetime.now().strftime("%d/%b/%Y")
 
     codes_list = [i["series_code"] for k, i in metric_config.items()]
     series_codes_string = ",".join(codes_list)
 
     payload = {
-    "Datefrom": "01/Jan/1989",
-    "Dateto": now,
-    "SeriesCodes": series_codes_string,
-    "CSVF": "TN",
-    "UsingCodes": "Y",
-    "VPD": "Y",
-    "VFD": "N",
-}
+        "Datefrom": date_from,
+        "Dateto": now,
+        "SeriesCodes": series_codes_string,
+        "CSVF": "TN",
+        "UsingCodes": "Y",
+        "VPD": "Y",
+        "VFD": "N",
+    }
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
@@ -156,6 +178,17 @@ def load(dataframes: list):
         print(f"Load failure: {e}")
     finally:
         conn.close()
+
+
+def main():
+    content = extract()
+
+    if content is None:
+        print("No data extracted from BoE.")
+    else:
+        dataframes = transform(content)
+        load(dataframes)
+
 
 
 if __name__ == '__main__':

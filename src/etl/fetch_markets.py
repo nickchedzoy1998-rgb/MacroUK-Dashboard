@@ -1,8 +1,10 @@
 import yfinance as yf
 import pandas as pd
+from datetime import datetime, timedelta
 from pathlib import Path
 import sqlite3
 
+from src.etl.db_utils import get_latest_date
 from src.utilities.config_loader import load_config
 
 # Helpers
@@ -10,30 +12,36 @@ y_config = load_config('metric_manifest', 'y_finance_metrics')
 database = load_config('settings', 'databases', 'economics_db')
 
 def extract(m: str, m_config: dict):
-    "Returns Dataframe for a metrics datapoints"
-    "Pass in a single dict from the config into the function in main"
+    """Return raw historical price data for a configured Yahoo ticker."""
     ticker = yf.Ticker(m_config.get('ticker', None))
+    latest = get_latest_date(metric_id_pattern=f"{m}_%", source='YAHOO_FINANCE')
 
-    period = m_config.get('period', 'max')
+    if latest is None:
+        history = ticker.history(period=m_config.get('period', 'max'))
+    else:
+        start_date = latest + timedelta(days=1)
+        today = datetime.now().date()
+        if start_date > today:
+            print(f"Yahoo Finance ETL: no new data for {m}.")
+            return pd.DataFrame()
 
-    history = ticker.history(period=period)
+        history = ticker.history(start=start_date.isoformat())
 
     if history.empty:
-        return 
-    
+        return pd.DataFrame()
+
     return history
 
+
 def transform(m, m_config, df):
-    "Takes a Dataframe converts to long form df for a single metrics data"
+    """Convert raw Yahoo data into standard economic series rows."""
     df = df.reset_index()
 
     cols_all = ["Date", "Open", "High", "Low", "Close", "Adj Close", "Volume"]
     cols = [col for col in cols_all if col in df.columns]
 
     df = df[cols]
-
     df[cols[1:]] = df[cols[1:]].apply(pd.to_numeric, errors='coerce')
-
     df['Date'] = pd.to_datetime(df['Date'], errors='coerce').dt.date
 
     cols_rename = {col: col.lower() for col in cols}
@@ -45,9 +53,8 @@ def transform(m, m_config, df):
 
     for col in lower_cols[1:]:
         split_df = df.copy()
-
         split_df = split_df[['date', col]]
-        split_df = split_df.dropna(subset=col)
+        split_df = split_df.dropna(subset=[col])
 
         split_df['metric_id'] = f'{m}_{col}'
         split_df['metric_name'] = m_config.get('name')
@@ -60,13 +67,11 @@ def transform(m, m_config, df):
 
         if not split_df.empty:
             metric_dfs.append(split_df)
-    
-    if not metric_dfs:
-        return []
-    
-    combined_metric_df = pd.concat(metric_dfs, ignore_index=True)
 
-    return combined_metric_df
+    if not metric_dfs:
+        return pd.DataFrame()
+
+    return pd.concat(metric_dfs, ignore_index=True)
 
 
 def combine():
@@ -142,6 +147,10 @@ def load(master_df):
         conn.close()
 
 
+def main():
+    load(combine())
+
+    
 if __name__ == '__main__':
     load(combine())
     # python -m src.etl.fetch_markets

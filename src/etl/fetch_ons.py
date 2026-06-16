@@ -4,6 +4,7 @@ import pandas as pd
 import sqlite3
 from pathlib import Path
 
+from src.etl.db_utils import get_latest_date
 from src.utilities.config_loader import load_config
 from src.utilities.http_client import fetch_json
 from src.utilities.build_url import build_ons
@@ -126,8 +127,17 @@ def main():
         print(f'Transforming json: {m}')
         df = transform(raw_json, m, m_config)
 
-        if df is not None:
+        if df is None or df.empty:
+            continue
+
+        latest = get_latest_date(metric_id=m, source='ONS')
+        if latest is not None:
+            df = df[df['date'] > latest]
+
+        if df is not None and not df.empty:
             dataframes.append(df)
+        else:
+            print(f"ONS ETL: no new rows for {m}.")
     
     if not dataframes:
         print("No dataframes to load.")

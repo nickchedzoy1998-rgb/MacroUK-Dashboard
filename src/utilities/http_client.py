@@ -1,14 +1,22 @@
 import requests
+from requests.exceptions import JSONDecodeError
 
 
 def fetch_json(url, user_agent=False):
     """Hits the API URL and returns parsed JSON response."""
     if user_agent == False:
         try:
-            response = requests.get(url)
+            response = requests.get(url, timeout=15)
             response.raise_for_status()
             return response.json()
 
+        except JSONDecodeError as e:
+            content_type = response.headers.get("content-type", "unknown")
+            body_preview = response.text[:120].replace("\n", " ").strip()
+            raise ConnectionError(
+                f"Extract failure: non-JSON response from {url} "
+                f"(content-type: {content_type}, body: {body_preview!r})"
+            ) from e
         except Exception as e:
             raise ConnectionError(f'Extract failure: {e}')
     

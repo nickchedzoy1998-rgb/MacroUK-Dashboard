@@ -1,0 +1,65 @@
+monthly_macro:
+# ONS
+  CPI:
+    change_type: "pp"
+  CORE_CPI:
+    change_type: "pp"
+  UNRATE:
+    change_type: "pp"
+  EMPRATE:
+    change_type: "pp"
+  WAGE_GROWTH:
+    change_type: "pp"
+  HOUSE_PRICE_GROWTH:
+    change_type: "pp"
+  BUSINESS_CONF:
+  change_type: "points"
+  CONSUMER_CONF:
+    change_type: "points"
+
+# BoE
+  BANK_RATE_MO:
+    change_type: "pp"
+  MORTGAGE_2YR_75LTV_MO:
+    change_type: "pp"
+  M4_GROWTH_MO:
+    change_type: "pp"
+  NOTES_COINS_GROWTH_MO:
+    change_type: "pp"
+  NET_LENDING_CORP_MO:
+    change_type: "pp"
+  CORP_OVERDRAFT_COST_MO:
+    change_type: "pp"
+  NET_LENDING_DWELLINGS_MO:
+  change_type: "pct"
+  NET_CONSUMER_CREDIT_MO:
+    change_type: "pct"
+  STERLING_ERI_MO:
+    change_type: "points"
+    
+# HMLR
+  UK_HPI_AVG_PRICE_UK:
+  change_type: "pct"
+  UK_HPI_INDEX_UK:
+    change_type: "pct"
+  UK_HPI_AVG_PRICE_LONDON:
+    change_type: "pct"
+  UK_HPI_AVG_PRICE_NW:
+    change_type: "pct"
+  UK_HPI_VOLUME_UK:
+    change_type: "pct"
+  UK_HPI_FTB_AVG_PRICE:
+    change_type: "pct"
+  UK_HPI_FOO_AVG_PRICE:
+    change_type: "pct"
+  UK_HPI_CASH_AVG_PRICE:
+    change_type: "pct"
+  UK_HPI_MORTGAGE_AVG_PRICE:
+    change_type: "pct"
+  UK_HPI_CASH_SALES_VOL:
+    change_type: "pct"
+  UK_HPI_MORTGAGE_SALES_VOL:
+    change_type: "pct"
+  UK_HPI_YOY_CHANGE_UK:
+    change_type: "pp"
+

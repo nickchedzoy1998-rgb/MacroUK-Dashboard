@@ -313,7 +313,7 @@ hmlr_metrics:
     unit: "%"
     frequency: "Monthly"
   UK_HPI_AVG_PRICE_LONDON:
-    region: "greater-london"
+    region: "london"
     field: "averagePrice"
     name: "Average Property Price (Greater London)"
     unit: "GBP"
@@ -331,43 +331,44 @@ hmlr_metrics:
     unit: "Transactions"
     frequency: "Monthly"
   UK_HPI_FTB_AVG_PRICE:
-    region: "united-kingdom"
-    field: "firstTimeBuyerAveragePrice"
-    name: "First-Time Buyer Average Price"
+    region: "england-and-wales"
+    field: "averagePriceFirstTimeBuyer"
+    name: "First-Time Buyer Average Price (England and Wales)"
     unit: "GBP"
     frequency: "Monthly"
   UK_HPI_FOO_AVG_PRICE:
-    region: "united-kingdom"
-    field: "formerOwnerOccupierAveragePrice"
-    name: "Former Owner-Occupier Average Price"
+    region: "england-and-wales"
+    field: "averagePriceFormerOwnerOccupier"
+    name: "Former Owner-Occupier Average Price (England and Wales)"
     unit: "GBP"
     frequency: "Monthly"
   UK_HPI_CASH_AVG_PRICE:
-    region: "united-kingdom"
-    field: "cashAveragePrice"
-    name: "Average Price Paid by Cash Buyers"
+    region: "england-and-wales"
+    field: "averagePriceCash"
+    name: "Average Price Paid by Cash Buyers (England and Wales)"
     unit: "GBP"
     frequency: "Monthly"
   UK_HPI_MORTGAGE_AVG_PRICE:
-    region: "united-kingdom"
-    field: "mortgageAveragePrice"
-    name: "Average Price Paid by Mortgage Buyers"
+    region: "england-and-wales"
+    field: "averagePriceMortgage"
+    name: "Average Price Paid by Mortgage Buyers (England and Wales)"
     unit: "GBP"
     frequency: "Monthly"
   UK_HPI_CASH_SALES_VOL:
-    region: "united-kingdom"
-    field: "cashSalesVolume"
-    name: "Cash-Financed Sales Volume"
+    region: "england-and-wales"
+    field: "salesVolumeCash"
+    name: "Cash-Financed Sales Volume (England and Wales)"
     unit: "Transactions"
     frequency: "Monthly"
   UK_HPI_MORTGAGE_SALES_VOL:
-    region: "united-kingdom"
-    field: "mortgageSalesVolume"
-    name: "Mortgage-Financed Sales Volume"
+    region: "england-and-wales"
+    field: "salesVolumeMortgage"
+    name: "Mortgage-Financed Sales Volume (England and Wales)"
     unit: "Transactions"
     frequency: "Monthly"
 
-### HM TREASURY (HMT) &amp; FISCAL TARGET METRICS ###
+### HM TREASURY (HMT) &amp; FISCAL TARGET METRICS ### 
+### FUTURE POTENTIAL METRICS ###
 hmt_metrics:
   CONSENSUS_GDP_CY:
     gov_collection: "data-forecasts"
