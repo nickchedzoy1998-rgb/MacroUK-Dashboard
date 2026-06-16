@@ -1,4 +1,4 @@
-monthly_macro:
+macro_metrics:
 # ONS
   CPI:
     change_type: "pp"
@@ -13,7 +13,7 @@ monthly_macro:
   HOUSE_PRICE_GROWTH:
     change_type: "pp"
   BUSINESS_CONF:
-  change_type: "points"
+    change_type: "points"
   CONSUMER_CONF:
     change_type: "points"
 
@@ -62,4 +62,10 @@ monthly_macro:
     change_type: "pct"
   UK_HPI_YOY_CHANGE_UK:
     change_type: "pp"
+# Quarterly
+  GDP_QQQ:
+    change_type: "pp"
+  GDP_YOY:
+    change_type: "pp"
+
 
