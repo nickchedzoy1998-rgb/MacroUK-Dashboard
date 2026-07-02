@@ -6,16 +6,32 @@ import streamlit as st
 import numpy as np
 
 from src.utilities.config_loader import load_config
-from src.utilities.http_client import extract
+from src.utilities.http_client import fetch_json
 
 
 class Dashboard:
     def __init__(self):
-        self.url = load_config('endpoints', 'fastapi')
+        self.url = load_config('endpoints', 'base', 'fastapi')
         st.title('Macro UK Dashboard')
 
-    def pull(self):
-        fast_api_json = extract(self.url)
+        metric_options = []
+        metric_keys = ['ons_metrics', 'boe_metrics', 'y_finance_metrics', 'hmlr_metrics', 'hmt_metrics']
+
+        for key in metric_keys:
+            options = list(load_config('metric_manifest', key).keys())
+            metric_options.extend(options)
+        
+        self.metric_options = metric_options
+  
+    def pull(self, metric_id=None):
+        metric_id = st.selectbox("Select a metric to view:", options=self.metric_options)
+
+        if metric_id is not None:
+            url = self.url + f'/{metric_id}'
+        else:
+            url = self.url
+
+        fast_api_json = fetch_json(url)
         df = pd.DataFrame(fast_api_json)
 
         if not df.empty:
@@ -46,6 +62,9 @@ class Dashboard:
 
 if __name__ == '__main__':
     dashboard = Dashboard()
-    dashboard.pull()
+
+    df = dashboard.pull()
+
+    st.dataframe(df)
 
     # python -m streamlit run src/dashboard/app.py
