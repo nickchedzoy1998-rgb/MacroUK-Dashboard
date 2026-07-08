@@ -33,9 +33,6 @@ def get_data(metrics: list, date_from=None):
         return None
 
 
-import pandas as pd
-import numpy as np
-
 def macro_cols(config: dict, date_from=None):
     raw_df = get_data(list(config.keys()), date_from=date_from)
     if raw_df is None or raw_df.empty:

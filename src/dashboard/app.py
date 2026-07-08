@@ -40,24 +40,21 @@ class Dashboard:
         
         return pd.DataFrame()
 
-# class OnsCharts:
-#     def cpi(self):
-#         st.title('Macro UK Dashboard')
+    def chart(self, df):
+        metric_name = df['metric_name'].unique()[0]
+        value_type = df['unit'].unique()[0]
 
-#         df = self.pull()
+        fig = px.line(
+            df, x='date', y='value', 
+            labels={'value': value_type, 'date': 'Date'},
+            title = metric_name
+        )
 
-#         # Harcoding Graph name in first draft
-#         fig = px.line(
-#             df, x='date', y='value', 
-#             labels={'value': 'CPI', 'date': 'Date'},
-#             title = 'Consumer Price Index History'
-#         )
+        # Customize layout to make it fit beautifully in Streamlit
+        fig.update_layout(template="plotly_dark", hovermode="x unified")
 
-#         # Customize layout to make it fit beautifully in Streamlit
-#         fig.update_layout(template="plotly_dark", hovermode="x unified")
-
-#         # 4. Display the Plotly chart in Streamlit
-#         st.plotly_chart(fig, width='stretch')
+        # 4. Display the Plotly chart in Streamlit
+        st.plotly_chart(fig, width='stretch')
 
 
 if __name__ == '__main__':
@@ -65,6 +62,7 @@ if __name__ == '__main__':
 
     df = dashboard.pull()
 
-    st.dataframe(df)
+    # st.dataframe(df)
+    dashboard.chart(df)
 
     # python -m streamlit run src/dashboard/app.py
