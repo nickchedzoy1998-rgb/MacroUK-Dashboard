@@ -145,7 +145,6 @@ SNAPSHOT_COLUMNS = [
     "TREND",
 ]
 
-
 def _read_series(metric_ids: list[str], source: str | None = None) -> pd.DataFrame:
     if not metric_ids:
         return pd.DataFrame()

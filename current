@@ -1,0 +1,18 @@
+To build Chart 1.1: Economic Growth Momentum, you need a clean picture of how the country's output is moving.
+
+Because GDP data is naturally reported as a growth rate rather than a raw currency amount, you only need to pull two columns from your database to track this momentum:
+
+GDP Quarter-on-Quarter Growth (Metric ID: 57)
+
+GDP Year-on-Year Growth (Metric ID: 58)
+
+The Math & Pipeline Strategy for this Specific Chart
+Because this chart relies entirely on Quarterly data, its isolated pipeline will look slightly different than the other monthly charts.
+
+Slice & Drop: Pull just these two columns and run your .dropna() step. This will leave you with a clean, unpadded grid containing data points exactly once every 3 months.
+
+Do Not Forward-Fill Here: While we used .ffill() in the master engine to help line up quarterly data next to monthly data, you should not use forward-fill for this specific chart. If you forward-fill these metrics, a bar chart of QoQ growth will show three identical bars for every single quarter, which distorts the actual economic reality.
+
+Keep the Quarterly Index: Keep this chart's DataFrame indexed strictly to the actual quarterly reporting months (e.g., March, June, September, December). When you pass this clean, 3-month interval DataFrame straight to your charting library, it will render perfect, crisp bars and lines without any artificial duplicate steps.
+
+Do you want to extract these two specific IDs next, or should we map out the column requirements for the inflation charts?

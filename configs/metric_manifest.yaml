@@ -56,20 +56,6 @@ ons_metrics:
     name: "Housing Cost Inflation (YoY % Change)"
     unit: "%"
     frequency: "Monthly"
-  BUSINESS_CONF:
-    topic: "businessindustryandtrade/business/businesssurvey"
-    cdid: "b5a2"
-    dataset: "bsa"
-    name: "Business Confidence Indicator"
-    unit: "Index"
-    frequency: "Monthly"
-  CONSUMER_CONF:
-    topic: "economy/consumerconfidenceandbehaviour/consumerconfidence"
-    cdid: "c6a2"
-    dataset: "ccs"
-    name: "Consumer Confidence Indicator"
-    unit: "Index"
-    frequency: "Monthly"
 
 ### BANK OF ENGLAND METRICS ###
 boe_metrics:
@@ -368,7 +354,6 @@ hmlr_metrics:
     frequency: "Monthly"
 
 ### HM TREASURY (HMT) &amp; FISCAL TARGET METRICS ### 
-### FUTURE POTENTIAL METRICS ###
 hmt_metrics:
   CONSENSUS_GDP_CY:
     gov_collection: "data-forecasts"

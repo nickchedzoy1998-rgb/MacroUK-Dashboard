@@ -11,6 +11,10 @@ DB_PATH = Path("data") / f"{database_name}.db"
 
 app = FastAPI()
 
+@app.get("/")
+async def root():
+    return {"status": "ok"}
+
 @app.get("/ready", tags=["Health"])
 async def health_check():
     try:

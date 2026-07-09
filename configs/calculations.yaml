@@ -67,7 +67,6 @@ macro:
     change_type: "pp"
   GDP_YOY:
     change_type: "pp"
-
   BANK_RATE_DA_MONTHLY:
     change_type: "pp"
   SONIA_MONTHLY_AVG:
@@ -86,5 +85,4 @@ housing_derived:
     change_type: "pct"
   CASH_VS_MORTGAGE_PRICE_RATIO:
     change_type: "pct"
-
 
