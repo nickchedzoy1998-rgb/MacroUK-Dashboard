@@ -2,6 +2,7 @@ from src.etl.fetch_boe import main as boe_main
 from src.etl.fetch_ons import main as ons_main
 from src.etl.fetch_markets import main as markets_main
 from src.etl.fetch_land_reg import main as land_reg_main
+from src.etl.build_calculations import main as calculations_main
 
 
 
@@ -18,6 +19,7 @@ def main():
     _run_step("ONS", ons_main)
     _run_step("Yahoo Finance", markets_main)
     _run_step("HMLR", land_reg_main)
+    _run_step("Calculations", calculations_main)
 
 
 

@@ -1,4 +1,4 @@
-macro_metrics:
+macro:
 # ONS
   CPI:
     change_type: "pp"
@@ -31,9 +31,9 @@ macro_metrics:
   CORP_OVERDRAFT_COST_MO:
     change_type: "pp"
   NET_LENDING_DWELLINGS_MO:
-    change_type: "pct"
+    change_type: "flow"
   NET_CONSUMER_CREDIT_MO:
-    change_type: "pct"
+    change_type: "flow"
   STERLING_ERI_MO:
     change_type: "points"
     
@@ -63,9 +63,28 @@ macro_metrics:
   UK_HPI_YOY_CHANGE_UK:
     change_type: "pp"
 # Quarterly
-  GDP_QQQ:
+  GDP_QOQ:
     change_type: "pp"
   GDP_YOY:
     change_type: "pp"
+
+  BANK_RATE_DA_MONTHLY:
+    change_type: "pp"
+  SONIA_MONTHLY_AVG:
+    change_type: "pp"
+
+housing_derived:
+  LONDON_PRICE_PREMIUM:
+    change_type: "pct"
+  NW_PRICE_RATIO:
+    change_type: "pct"
+  CASH_BUYER_SHARE:
+    change_type: "pp"
+  MORTGAGE_BUYER_SHARE:
+    change_type: "pp"
+  FTB_PRICE_RATIO:
+    change_type: "pct"
+  CASH_VS_MORTGAGE_PRICE_RATIO:
+    change_type: "pct"
 
 
