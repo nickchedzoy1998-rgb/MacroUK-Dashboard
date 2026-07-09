@@ -67,5 +67,3 @@ macro_metrics:
     change_type: "pp"
   GDP_YOY:
     change_type: "pp"
-
-
