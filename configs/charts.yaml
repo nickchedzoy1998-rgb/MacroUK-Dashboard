@@ -1,0 +1,19 @@
+# Section 1
+MacroPulse:
+  # Economic Growth Momentum
+  EGM:
+    name: 'Economic Growth Momentum'
+    metrics: ['GDP_QOQ', 'GDP_YOY']
+    aggregation: 'Quarterly'
+  # Inflation Battle
+  IB:
+    name: 'Inflation Battle'
+    metrics: ['CPI', 'CORE_CPI', 'HOUSE_PRICE_GROWTH']
+    aggregation: 'Monthly'
+  # Labor Market Health
+  LBH:
+    name: 'Labor Market Health'
+    metrics: ['UNRATE', 'EMPRATE', 'WAGE_GROWTH']
+    aggregation: 'Monthly'
+
+  

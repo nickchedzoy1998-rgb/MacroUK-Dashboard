@@ -12,7 +12,7 @@ from datetime import datetime, timedelta
 import io
 from pathlib import Path
 
-from src.etl.db_utils import get_latest_date
+from src.utilities.db_utils import get_latest_date
 from src.utilities.config_loader import load_config
 
 # Helpers

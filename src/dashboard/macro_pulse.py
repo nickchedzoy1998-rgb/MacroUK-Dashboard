@@ -8,24 +8,17 @@ import numpy as np
 from src.utilities.config_loader import load_config
 from src.utilities.http_client import fetch_json
 
+charts_config = load_config('charts', 'MacroPulse')
+metric_ids = charts_config['EGM']['metrics']
+
 
 class Dashboard:
     def __init__(self):
         self.url = load_config('endpoints', 'base', 'fastapi')
         st.title('Macro UK Dashboard')
 
-        metric_options = []
-        metric_keys = ['ons_metrics', 'boe_metrics', 'y_finance_metrics', 'hmlr_metrics', 'hmt_metrics']
-
-        for key in metric_keys:
-            options = list(load_config('metric_manifest', key).keys())
-            metric_options.extend(options)
-        
-        self.metric_options = metric_options
-  
-    def pull(self, metric_id=None):
-        metric_id = st.selectbox("Select a metric to view:", options=self.metric_options)
-
+    
+    def pull_from_api(self, metric_id=None):        
         if metric_id is not None:
             url = self.url + f'/{metric_id}'
         else:
@@ -40,7 +33,7 @@ class Dashboard:
         
         return pd.DataFrame()
 
-    def chart(self, df):
+    def egm_chart(self, df):
         metric_name = df['metric_name'].unique()[0]
         value_type = df['unit'].unique()[0]
 
@@ -56,13 +49,10 @@ class Dashboard:
         # 4. Display the Plotly chart in Streamlit
         st.plotly_chart(fig, width='stretch')
 
-
 if __name__ == '__main__':
     dashboard = Dashboard()
 
-    df = dashboard.pull()
+    for id in metric_ids:
+        print(dashboard.pull_from_api(id))
 
-    # st.dataframe(df)
-    dashboard.chart(df)
-
-    # python -m streamlit run src/dashboard/app.py
+# python -m src.dashboard.macro_pulse

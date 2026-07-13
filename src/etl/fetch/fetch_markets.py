@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 from pathlib import Path
 import sqlite3
 
-from src.etl.db_utils import get_latest_date
+from src.utilities.db_utils import get_latest_date
 from src.utilities.config_loader import load_config
 
 # Helpers

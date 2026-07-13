@@ -4,7 +4,7 @@ import pandas as pd
 import sqlite3
 from pathlib import Path
 
-from src.etl.db_utils import get_latest_date
+from src.utilities.db_utils import get_latest_date
 from src.utilities.config_loader import load_config
 from src.utilities.http_client import fetch_json
 from src.utilities.build_url import build_ons
