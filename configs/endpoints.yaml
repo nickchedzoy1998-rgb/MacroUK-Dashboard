@@ -1,5 +1,5 @@
 base:
   ons: "https://www.ons.gov.uk/{}/timeseries/{}/{}/data"
-  fastapi: "http://127.0.0.1:8000/series"
+  fastapi: "http://127.0.0.1:8000/api"
   boe: "https://www.bankofengland.co.uk/boeapps/iadb/fromshowcolumns.asp?csv.x=yes"
   land_reg: "https://landregistry.data.gov.uk/data/ukhpi/region/{region}/month/{year}-{month}.json"

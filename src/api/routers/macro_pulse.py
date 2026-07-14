@@ -28,7 +28,7 @@ def get_egm_data(db: sqlite3.Connection=Depends(get_db_conn)):
     cursor = db.cursor()
     cursor.execute(f'SELECT * FROM {table_name} ORDER BY date ASC')
 
-    return cursor.fetchall()
+    return [dict(row) for row in cursor.fetchall()]
 
 
 @router.get("/ib", response_model=List[CHART_SCHEMAS['IB']])
@@ -38,7 +38,7 @@ def get_ib_data(db: sqlite3.Connection=Depends(get_db_conn)):
     cursor = db.cursor()
     cursor.execute(f'SELECT * FROM {table_name} ORDER BY date ASC')
 
-    return cursor.fetchall()
+    return [dict(row) for row in cursor.fetchall()]
     
 
 @router.get("/lbh", response_model=List[CHART_SCHEMAS['LBH']])
@@ -48,4 +48,4 @@ def get_lbh_data(db: sqlite3.Connection=Depends(get_db_conn)):
     cursor = db.cursor()
     cursor.execute(f'SELECT * FROM {table_name} ORDER BY date ASC')
 
-    return cursor.fetchall()
+    return [dict(row) for row in cursor.fetchall()]

@@ -11,3 +11,8 @@ app = FastAPI(title='MACRO UK DASHBOARD API')
 @app.get("/")
 def read_root():
     return {"message": "Welcome to the Macro UK Dashboard API. Head to /docs for the interactive UI."}
+
+
+app.include_router(macro_pulse_router, prefix='/api/macro-pulse', tags=['Macro Pulse'])
+
+# uvicorn src.api.main:app --reload
