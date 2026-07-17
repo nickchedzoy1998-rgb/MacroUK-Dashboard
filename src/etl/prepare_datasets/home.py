@@ -53,7 +53,7 @@ def get_kpi_dict(kpi, df):
         pass
 
     elif comparison_type == "target":
-        delta = value - 2.0
+        delta = value - float(config['target'])
 
     elif comparison_type == "previous_distinct_value":
         different_values = df.loc[df["value"] != value, "value"]

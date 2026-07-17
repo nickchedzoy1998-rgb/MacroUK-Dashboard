@@ -29,7 +29,7 @@ Home:
   HOUSE_PRICE_GROWTH:
     name: "House Price Growth"
     metric: "UK_HPI_YOY_CHANGE_UK"
-    comparison_type: "previous_observation"
+    comparison_type: "not applicable"
     comparison_label: "vs previous month"
     delta_unit: "pp"
   FTSE_250:

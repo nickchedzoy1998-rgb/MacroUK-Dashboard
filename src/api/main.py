@@ -1,18 +1,15 @@
-from fastapi import FastAPI
-import sqlite3
-from pathlib import Path
+﻿from fastapi import FastAPI
 
-from src.utilities.config_loader import load_config
+from src.api.routers.home import router as home_router
 from src.api.routers.macro_pulse import router as macro_pulse_router
 
 app = FastAPI(title='MACRO UK DASHBOARD API')
 
-# Simple endpoint that shows web server is physically running when we visit the base URL
-@app.get("/")
+
+@app.get('/')
 def read_root():
-    return {"message": "Welcome to the Macro UK Dashboard API. Head to /docs for the interactive UI."}
+    return {'message': 'Welcome to the Macro UK Dashboard API. Head to /docs for the interactive UI.'}
 
 
 app.include_router(macro_pulse_router, prefix='/api/macropulse', tags=['Macro Pulse'])
-
-# uvicorn src.api.main:app --reload
+app.include_router(home_router, prefix='/api/home', tags=['Home'])
