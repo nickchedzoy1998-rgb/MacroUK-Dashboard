@@ -1,19 +1,18 @@
-import requests
 import streamlit as st
 
-from src.utilities.config_loader import load_config
-from src.utilities.build_url import build_chart_endpoint
+# Page Config:
+st.set_page_config(
+    page_title='Macro UK Dashboard',
+    page_icon='💷',
+    layout='wide'
+)
 
-# Helpers
-endpoint = load_config('endpoints', 'base', 'fastapi')
-chart_configs = load_config('charts')
-pages = list(chart_configs.keys())
+# Pages:
+home_page = st.Page("pages/home.py", title="Home", icon="🏠", default=True)
+macropulse_page = st.Page("pages/macro_pulse.py", title="Macro Pulse", icon="📈")
 
-st.title('Macro UK Dashboard')
-st.write('Welcome! use the sidebar to navigate between pages')
-
+page_nav = st.navigation(pages=[home_page, macropulse_page])
+page_nav.run()
 
 
-
-
-
+# python -m streamlit run .\src\api\dashboard\app.py

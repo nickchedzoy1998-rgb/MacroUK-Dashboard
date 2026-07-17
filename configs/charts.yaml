@@ -1,3 +1,31 @@
+# Home
+Home:
+  GDP_GROWTH:
+    name: 'GDP GROWTH'
+    metrics: ['GDP_QOQ']
+    aggregation: None
+  Inflation:
+    name: 'Inflation'
+    metrics: ['CPI']
+    aggregation: None
+  Unemployment:
+    name: 'Unemployment'
+    metrics: ['UNRATE']
+    aggregation: None
+  Bank_Rate:
+    name: 'Bank Rate'
+    metrics: ['BANK_RATE_DA']
+    aggregation: None
+  House_Price_Growth:
+    name: 'House Price Growth'
+    metrics: ['UK_HPI_YOY_CHANGE_UK']
+    aggregation: None
+  FTSE_250:
+    name: 'FTSE 250'
+    metrics: ['FTSE_250']
+    aggregation: None
+
+
 # Section 1
 MacroPulse:
   # Economic Growth Momentum
