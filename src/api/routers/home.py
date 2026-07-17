@@ -76,8 +76,10 @@ def get_home_summary(db: sqlite3.Connection = Depends(get_db_conn)):
                 name=config['name'],
                 comparison_type=config['comparison_type'],
                 comparison_label=config.get('comparison_label'),
+                main_unit=config.get('main_unit'),
                 delta_unit=config.get('delta_unit'),
                 delta_direction=config.get('delta_direction'),
+                description=config.get('description')
             )
         )
 

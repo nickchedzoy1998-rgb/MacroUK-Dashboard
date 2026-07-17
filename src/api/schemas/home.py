@@ -11,8 +11,10 @@ class HomeKPI(BaseModel):
     date: date
     comparison_type: str
     comparison_label: str | None = None
+    main_unit: str | None = None
     delta_unit: str | None = None
     delta_direction: str | None = None
+    description: str
 
     model_config = {"from_attributes": True}
 

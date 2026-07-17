@@ -13,3 +13,5 @@ def read_root():
 
 app.include_router(macro_pulse_router, prefix='/api/macropulse', tags=['Macro Pulse'])
 app.include_router(home_router, prefix='/api/home', tags=['Home'])
+
+# python -m uvicorn src.api.main:app --reload
