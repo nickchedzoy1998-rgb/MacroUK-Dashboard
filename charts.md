@@ -158,5 +158,3 @@ Now that we have this blueprint, we know exactly what your code needs to do:
 1. **Resample everything to Monthly** for Tabs 1, 2, and 3.
 2. **Keep a Daily tracking dataset** for Tabs 4 and 5.
 3. **Build a Normalization/Indexing helper function** (e.g., calculating percentage returns from a specific baseline date) so charts like 4.1 can compare an index score like `7,500` (FTSE) to a share price like `£1.50` (Taylor Wimpey) on the same Y-axis.
-
-Which of these tabs or specific charts do you want to prioritize setting up the data pipelines for first?
