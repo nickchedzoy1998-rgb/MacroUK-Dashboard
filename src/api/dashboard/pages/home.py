@@ -310,7 +310,7 @@ st.markdown(
 st.markdown(
     dedent("""
     <section class="home-title">
-        <h1>UK Economic Dashboard</h1>
+        <h1>MacroUK Dashboard</h1>
         <p>
             Track the health of the UK economy through growth, inflation,
             employment, monetary policy, housing, and financial markets.

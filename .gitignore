@@ -18,3 +18,4 @@ data/*.db
 src/utilities/__pycache__/config_loader.cpython-311.pyc
 src/etl/__pycache__/fetch_ons.cpython-311.pyc
 src/etl/__pycache__/fetch_ons.cpython-311.pyc
+src/utilities/__pycache__/config_loader.cpython-311.pyc
