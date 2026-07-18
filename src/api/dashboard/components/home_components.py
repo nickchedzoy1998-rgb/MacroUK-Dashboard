@@ -116,34 +116,123 @@ def render_section_heading(title: str) -> None:
     )
 
 
-def render_supporting_section() -> None:
+def render_economy_summary(summary: dict[str, Any] | None) -> None:
+    if not summary:
+        return
+
+    headline = summary.get("headline")
+    body = summary.get("body")
+    if not headline or not body:
+        return
+
     st.markdown(
-        dedent("""
-        <section class="home-supporting">
-            <h3>How to use this dashboard</h3>
-            <p>
-                Start with the headline indicators to assess the current macro
-                picture, then open Macro Pulse for a deeper view of trends,
-                turning points, and supporting chart evidence.
-            </p>
+        dedent(f"""
+        <section class="home-summary-panel">
+            <div class="home-eyebrow">UK economy at a glance</div>
+            <h3>{escape(str(headline))}</h3>
+            <p>{escape(str(body))}</p>
         </section>
         """).strip(),
         unsafe_allow_html=True,
     )
 
 
-def render_macro_pulse_navigation() -> None:
-    if st.button("Go to MacroPulse Deep Dive"):
-        st.switch_page("pages/macro_pulse.py")
+def render_highlights(highlights: list[dict[str, Any]] | None) -> None:
+    if not highlights:
+        return
+
+    cards = "".join(render_highlight_card(highlight) for highlight in highlights[:3])
+    st.markdown(
+        dedent(f"""
+        <div class="home-section-heading home-section-heading--spaced">
+            <h2>What changed?</h2>
+        </div>
+        <section class="home-highlight-grid">{cards}</section>
+        """).strip(),
+        unsafe_allow_html=True,
+    )
 
 
-def render_observation_note() -> None:
+def render_highlight_card(highlight: dict[str, Any]) -> str:
+    direction = highlight.get("direction", "neutral")
+    if direction not in {"positive", "negative", "neutral"}:
+        direction = "neutral"
+
+    direction_label = {
+        "positive": "Improving",
+        "negative": "Watch",
+        "neutral": "Stable",
+    }[direction]
+
+    return (
+        f'<article class="home-highlight-card home-highlight-card--{direction}">'
+        '<div class="home-highlight-card__meta">'
+        f'<span class="home-highlight-card__marker">{escape(direction_label)}</span>'
+        "</div>"
+        f'<h3>{escape(str(highlight.get("title", "")))}</h3>'
+        f'<p>{escape(str(highlight.get("text", "")))}</p>'
+        "</article>"
+    )
+
+
+def render_dashboard_navigation() -> None:
     st.markdown(
         dedent("""
-        <p class="home-note">
-            Observation dates vary across indicators because source datasets are
-            released on different schedules.
-        </p>
+        <div class="home-section-heading home-section-heading--spaced">
+            <h2>Explore the dashboard</h2>
+        </div>
+        """).strip(),
+        unsafe_allow_html=True,
+    )
+
+    nav_items = [
+        (
+            "Macro Pulse",
+            "Track growth, inflation and labour-market momentum.",
+            "Open analysis",
+            True,
+        ),
+        ("Growth and Activity", "Follow output, demand and activity indicators.", "Coming soon", False),
+        ("Inflation and Prices", "Monitor price pressure across headline series.", "Coming soon", False),
+        ("Labour Market", "Review employment, unemployment and wage signals.", "Coming soon", False),
+        ("Housing and Credit", "Track housing conditions and household finance.", "Coming soon", False),
+        ("Markets and Sterling", "Assess UK market and exchange-rate indicators.", "Coming soon", False),
+    ]
+
+    for row_start in range(0, len(nav_items), 3):
+        columns = st.columns(3)
+        for column, item in zip(columns, nav_items[row_start:row_start + 3]):
+            title, description, status, is_active = item
+            status_class = "home-nav-card__status--active" if is_active else "home-nav-card__status--soon"
+
+            with column:
+                st.markdown(
+                    (
+                        '<article class="home-nav-card">'
+                        f"<h3>{escape(title)}</h3>"
+                        f"<p>{escape(description)}</p>"
+                        f'<div class="home-nav-card__status {status_class}">{escape(status)}</div>'
+                        "</article>"
+                    ),
+                    unsafe_allow_html=True,
+                )
+                if is_active and st.button("Open Macro Pulse", key="macro_pulse_nav"):
+                    st.switch_page("pages/macro_pulse.py")
+
+
+def render_data_note() -> None:
+    st.markdown(
+        dedent("""
+        <section class="home-data-note">
+            <h3>About the data</h3>
+            <p>
+                Indicators update on different release schedules, so observation
+                dates vary. Each card displays the latest available observation
+                for that series. Headline values are drawn from official or
+                established market sources, and the analysis is descriptive
+                rather than financial advice.
+            </p>
+        </section>
         """).strip(),
         unsafe_allow_html=True,
     )

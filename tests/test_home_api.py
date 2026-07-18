@@ -1,7 +1,7 @@
-﻿import unittest
-from fastapi.testclient import TestClient
+import unittest
 
-from src.api.main import app
+from src.api.dependencies import get_db_conn
+from src.api.routers.home import get_home_summary
 from src.api.schemas.home import HomeKPI, HomeSummaryResponse
 
 
@@ -10,15 +10,24 @@ class HomeApiTests(unittest.TestCase):
         self.assertTrue(HomeKPI is not None)
         self.assertTrue(HomeSummaryResponse is not None)
 
-    def test_home_summary_endpoint(self):
-        client = TestClient(app)
-        response = client.get('/api/home/summary')
+    def test_home_summary_response(self):
+        conn_gen = get_db_conn()
+        db = next(conn_gen)
 
-        self.assertEqual(response.status_code, 200)
-        payload = response.json()
+        try:
+            payload = get_home_summary(db).model_dump()
+        finally:
+            try:
+                next(conn_gen)
+            except StopIteration:
+                pass
+
         self.assertIn('kpis', payload)
+        self.assertIn('summary', payload)
+        self.assertIn('highlights', payload)
         self.assertEqual(len(payload['kpis']), 6)
         self.assertEqual(payload['kpis'][0]['kpi_id'], 'GDP_GROWTH')
+        self.assertLessEqual(len(payload['highlights']), 3)
 
 
 if __name__ == '__main__':

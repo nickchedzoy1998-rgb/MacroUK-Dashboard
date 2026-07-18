@@ -35,6 +35,10 @@
     margin: 0;
 }
 
+.home-section-heading--spaced {
+    margin-top: 1.5rem;
+}
+
 .home-kpi-grid {
     align-items: stretch;
     display: grid;
@@ -141,6 +145,112 @@
     padding-top: 0.8rem;
 }
 
+.home-summary-panel {
+    background: rgba(47, 102, 144, 0.055);
+    border: 1px solid rgba(47, 102, 144, 0.14);
+    border-left: 4px solid #2f6690;
+    border-radius: 8px;
+    margin: 0.35rem 0 1.55rem;
+    padding: 1.15rem 1.25rem;
+}
+
+.home-eyebrow {
+    color: rgba(47, 102, 144, 0.88);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.35rem;
+    text-transform: uppercase;
+}
+
+.home-summary-panel h3 {
+    color: #1f2933;
+    font-size: 1.28rem;
+    font-weight: 680;
+    letter-spacing: 0;
+    line-height: 1.25;
+    margin: 0 0 0.45rem;
+}
+
+.home-summary-panel p {
+    color: rgba(31, 41, 51, 0.74);
+    font-size: 0.98rem;
+    line-height: 1.55;
+    margin: 0;
+}
+
+.home-highlight-grid {
+    align-items: stretch;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin: 0.25rem 0 1.5rem;
+}
+
+.home-highlight-card {
+    background: #ffffff;
+    border: 1px solid rgba(49, 51, 63, 0.14);
+    border-left: 4px solid #5d6f78;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    min-height: 155px;
+    padding: 1rem 1.05rem;
+}
+
+.home-highlight-card--positive {
+    border-left-color: #16794c;
+}
+
+.home-highlight-card--negative {
+    border-left-color: #b45f43;
+}
+
+.home-highlight-card--neutral {
+    border-left-color: #5d6f78;
+}
+
+.home-highlight-card__meta {
+    margin-bottom: 0.55rem;
+}
+
+.home-highlight-card__marker {
+    background: rgba(93, 111, 120, 0.10);
+    border-radius: 999px;
+    color: rgba(31, 41, 51, 0.72);
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    line-height: 1;
+    padding: 0.32rem 0.48rem;
+}
+
+.home-highlight-card--positive .home-highlight-card__marker {
+    background: rgba(22, 121, 76, 0.10);
+    color: #16794c;
+}
+
+.home-highlight-card--negative .home-highlight-card__marker {
+    background: rgba(180, 95, 67, 0.12);
+    color: #91442d;
+}
+
+.home-highlight-card h3 {
+    color: #1f2933;
+    font-size: 1rem;
+    font-weight: 670;
+    letter-spacing: 0;
+    line-height: 1.28;
+    margin: 0 0 0.45rem;
+}
+
+.home-highlight-card p {
+    color: rgba(31, 41, 51, 0.70);
+    font-size: 0.9rem;
+    line-height: 1.45;
+    margin: 0;
+}
+
 .home-supporting {
     background: rgba(47, 102, 144, 0.045);
     border: 1px solid rgba(47, 102, 144, 0.12);
@@ -162,6 +272,71 @@
     margin-top: 0.85rem;
 }
 
+.home-nav-card {
+    background: #ffffff;
+    border: 1px solid rgba(49, 51, 63, 0.14);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    min-height: 142px;
+    padding: 1rem 1.05rem;
+}
+
+.home-nav-card h3 {
+    color: #1f2933;
+    font-size: 1rem;
+    font-weight: 670;
+    letter-spacing: 0;
+    line-height: 1.25;
+    margin: 0 0 0.45rem;
+}
+
+.home-nav-card p {
+    color: rgba(31, 41, 51, 0.68);
+    font-size: 0.9rem;
+    line-height: 1.4;
+    margin: 0 0 0.85rem;
+}
+
+.home-nav-card__status {
+    border-top: 1px solid rgba(49, 51, 63, 0.10);
+    font-size: 0.78rem;
+    font-weight: 700;
+    margin-top: auto;
+    padding-top: 0.7rem;
+}
+
+.home-nav-card__status--active {
+    color: #2f6690;
+}
+
+.home-nav-card__status--soon {
+    color: rgba(31, 41, 51, 0.48);
+}
+
+.home-data-note {
+    background: rgba(49, 51, 63, 0.035);
+    border: 1px solid rgba(49, 51, 63, 0.10);
+    border-radius: 8px;
+    margin-top: 1.45rem;
+    padding: 1rem 1.1rem;
+}
+
+.home-data-note h3 {
+    color: #1f2933;
+    font-size: 0.98rem;
+    font-weight: 650;
+    letter-spacing: 0;
+    margin: 0 0 0.35rem;
+}
+
+.home-data-note p {
+    color: rgba(31, 41, 51, 0.68);
+    font-size: 0.88rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
 div[data-testid="stButton"] > button {
     background: #2f6690;
     border-color: #2f6690;
@@ -180,10 +355,18 @@ div[data-testid="stButton"] > button:hover {
     .home-kpi-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
+
+    .home-highlight-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
 }
 
 @media (max-width: 640px) {
     .home-kpi-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .home-highlight-grid {
         grid-template-columns: 1fr;
     }
 

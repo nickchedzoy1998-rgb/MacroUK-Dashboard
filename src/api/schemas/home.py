@@ -1,5 +1,6 @@
-﻿from pydantic import BaseModel
 from datetime import date
+
+from pydantic import BaseModel
 
 
 class HomeKPI(BaseModel):
@@ -19,5 +20,20 @@ class HomeKPI(BaseModel):
     model_config = {"from_attributes": True}
 
 
+class HomeSummaryNarrative(BaseModel):
+    headline: str
+    body: str
+
+
+class HomeHighlight(BaseModel):
+    kpi_id: str
+    title: str
+    text: str
+    importance: int
+    direction: str
+
+
 class HomeSummaryResponse(BaseModel):
     kpis: list[HomeKPI]
+    summary: HomeSummaryNarrative
+    highlights: list[HomeHighlight]

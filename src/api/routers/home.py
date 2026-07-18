@@ -1,10 +1,12 @@
-﻿import sqlite3
+import sqlite3
+from dataclasses import asdict
 from datetime import date, datetime
 
 from fastapi import APIRouter, Depends, HTTPException
 
 from src.api.dependencies import get_db_conn
 from src.api.schemas.home import HomeKPI, HomeSummaryResponse
+from src.api.services.home_summary import build_home_interpretation
 from src.utilities.config_loader import load_config
 
 home_config = load_config('charts', 'Home')
@@ -83,4 +85,10 @@ def get_home_summary(db: sqlite3.Connection = Depends(get_db_conn)):
             )
         )
 
-    return HomeSummaryResponse(kpis=kpis)
+    summary, highlights = build_home_interpretation(kpis, home_config)
+
+    return HomeSummaryResponse(
+        kpis=kpis,
+        summary=asdict(summary),
+        highlights=[asdict(highlight) for highlight in highlights],
+    )
