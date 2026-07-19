@@ -79,6 +79,8 @@ class MacroPulseChart(BaseModel):
     coverage: ChartCoverage
     target: float | None = None
     zero_reference: float | None = None
+    baseline_date: date | None = None
+    geography: str | None = None
 
 
 class MacroPulseResponse(BaseModel):

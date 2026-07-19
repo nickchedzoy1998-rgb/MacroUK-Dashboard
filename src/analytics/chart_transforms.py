@@ -208,6 +208,43 @@ def return_over_observations(
     return result
 
 
+def year_to_date_return(
+    frame: pd.DataFrame,
+    *,
+    date_column: str = "date",
+    metric_column: str = "metric_id",
+    value_column: str = "value",
+) -> pd.DataFrame:
+    """Calculate returns from the last valid observation of the prior year."""
+    prepared, _ = _valid_long_frame(
+        frame,
+        date_column=date_column,
+        metric_column=metric_column,
+        value_column=value_column,
+        metrics=None,
+    )
+    if prepared.empty:
+        return prepared.assign(return_pct=pd.Series(dtype="float64"))
+
+    result = prepared.copy()
+    result["_year"] = result[date_column].dt.year
+    result["_prior_year_value"] = (
+        result.groupby([metric_column, "_year"], sort=False)[value_column]
+        .transform("first")
+    )
+    prior_year_end = (
+        result.groupby([metric_column, "_year"], sort=False)[value_column]
+        .first()
+        .groupby(level=0)
+        .shift(1)
+        .rename("_prior_year_end")
+    )
+    result = result.join(prior_year_end, on=[metric_column, "_year"])
+    result["return_pct"] = ((result[value_column] / result["_prior_year_end"]) - 1) * 100
+    result.loc[result["_prior_year_end"].isna() | result["_prior_year_end"].eq(0), "return_pct"] = pd.NA
+    return result.drop(columns=["_year", "_prior_year_value", "_prior_year_end"])
+
+
 def return_over_period(
     frame: pd.DataFrame,
     period: str | pd.DateOffset,

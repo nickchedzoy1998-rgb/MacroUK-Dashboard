@@ -186,24 +186,18 @@ def render_dashboard_navigation() -> None:
     )
 
     nav_items = [
-        (
-            "Macro Pulse",
-            "Track growth, inflation and labour-market momentum.",
-            "Open analysis",
-            True,
-        ),
-        ("Growth and Activity", "Follow output, demand and activity indicators.", "Coming soon", False),
-        ("Inflation and Prices", "Monitor price pressure across headline series.", "Coming soon", False),
-        ("Labour Market", "Review employment, unemployment and wage signals.", "Coming soon", False),
-        ("Housing and Credit", "Track housing conditions and household finance.", "Coming soon", False),
-        ("Markets and Sterling", "Assess UK market and exchange-rate indicators.", "Coming soon", False),
+        ("Macro Pulse", "Track growth, inflation and labour-market momentum.", "pages/macro_pulse.py", "Open Macro Pulse", "macro_pulse_nav"),
+        ("Monetary Policy & Liquidity", "Follow policy rates, money growth and business credit.", "pages/monetary_policy.py", "Open Monetary Policy", "monetary_policy_nav"),
+        ("Housing Market & Consumer Credit", "Track mortgage conditions, property activity and borrowing.", "pages/housing_credit.py", "Open Housing & Credit", "housing_credit_nav"),
+        ("Financial Markets & Equities", "Compare UK equity tiers and selected company proxies.", "pages/financial_markets.py", "Open Financial Markets", "financial_markets_nav"),
+        ("Currency, Commodities & Fixed Income", "Assess sterling, bond-asset proxies and energy prices.", "pages/global_flows.py", "Open Global Flows", "global_flows_nav"),
     ]
 
     for row_start in range(0, len(nav_items), 3):
         columns = st.columns(3)
         for column, item in zip(columns, nav_items[row_start:row_start + 3]):
-            title, description, status, is_active = item
-            status_class = "home-nav-card__status--active" if is_active else "home-nav-card__status--soon"
+            title, description, page_path, action, key = item
+            status_class = "home-nav-card__status--active"
 
             with column:
                 st.markdown(
@@ -211,13 +205,13 @@ def render_dashboard_navigation() -> None:
                         '<article class="home-nav-card">'
                         f"<h3>{escape(title)}</h3>"
                         f"<p>{escape(description)}</p>"
-                        f'<div class="home-nav-card__status {status_class}">{escape(status)}</div>'
+                        f'<div class="home-nav-card__status {status_class}">Available</div>'
                         "</article>"
                     ),
                     unsafe_allow_html=True,
                 )
-                if is_active and st.button("Open Macro Pulse", key="macro_pulse_nav"):
-                    st.switch_page("pages/macro_pulse.py")
+                if st.button(action, key=key):
+                    st.switch_page(page_path)
 
 
 def render_data_note() -> None:

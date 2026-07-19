@@ -89,3 +89,161 @@ MacroPulse:
     units: {'UNRATE': '%', 'EMPRATE': '%', 'WAGE_GROWTH': '%'}
     display_order: 3
 
+MonetaryPolicy:
+  MP1:
+    name: 'Policy Rate and Market Rates'
+    description: 'Compare Bank Rate and SONIA with a clearly labelled gilt ETF price proxy.'
+    metrics: ['BANK_RATE_DA', 'SONIA', 'BANK_RATE_SONIA_SPREAD']
+    optional_metrics: ['ETF_UK_GILT_close']
+    frequency: 'Daily'
+    chart_type: 'multi_line'
+    units: {'BANK_RATE_DA': '%', 'SONIA': '%', 'BANK_RATE_SONIA_SPREAD': 'pp', 'ETF_UK_GILT_close': 'GBP price'}
+    metric_labels: {'BANK_RATE_DA': 'Bank Rate', 'SONIA': 'SONIA', 'BANK_RATE_SONIA_SPREAD': 'Bank Rate–SONIA spread', 'ETF_UK_GILT_close': 'UK gilt ETF price proxy'}
+    roles: {'BANK_RATE_DA': 'line', 'SONIA': 'line', 'BANK_RATE_SONIA_SPREAD': 'line', 'ETF_UK_GILT_close': 'price_proxy'}
+    axes: {'BANK_RATE_DA': 'left', 'SONIA': 'left', 'BANK_RATE_SONIA_SPREAD': 'left', 'ETF_UK_GILT_close': 'right'}
+    display_order: 1
+  MP2:
+    name: 'Money Supply and Liquidity Growth'
+    description: 'Track broad money and notes-and-coin growth without inferring a single policy cause.'
+    metrics: ['M4_GROWTH_MO', 'NOTES_COINS_GROWTH_MO']
+    optional_metrics: []
+    frequency: 'Monthly'
+    chart_type: 'multi_line'
+    units: {'M4_GROWTH_MO': '%', 'NOTES_COINS_GROWTH_MO': '%'}
+    roles: {'M4_GROWTH_MO': 'line', 'NOTES_COINS_GROWTH_MO': 'line'}
+    axes: {'M4_GROWTH_MO': 'left', 'NOTES_COINS_GROWTH_MO': 'left'}
+    display_order: 2
+  MP3:
+    name: 'Business Credit Transmission'
+    description: 'Compare corporate borrowing costs with business-lending growth; co-movement does not establish causality.'
+    metrics: ['CORP_OVERDRAFT_COST_MO', 'NET_LENDING_CORP_MO']
+    optional_metrics: []
+    frequency: 'Monthly'
+    chart_type: 'bar_line'
+    units: {'CORP_OVERDRAFT_COST_MO': '%', 'NET_LENDING_CORP_MO': '%'}
+    roles: {'CORP_OVERDRAFT_COST_MO': 'line', 'NET_LENDING_CORP_MO': 'bar'}
+    axes: {'CORP_OVERDRAFT_COST_MO': 'left', 'NET_LENDING_CORP_MO': 'right'}
+    display_order: 3
+
+HousingCredit:
+  HC1:
+    name: 'Mortgage Rates and House-Price Growth'
+    description: 'Compare mortgage financing conditions with annual UK house-price growth.'
+    metrics: ['MORTGAGE_2YR_75LTV_MO', 'UK_HPI_YOY_CHANGE_UK']
+    optional_metrics: []
+    frequency: 'Monthly'
+    chart_type: 'dual_line'
+    units: {'MORTGAGE_2YR_75LTV_MO': '%', 'UK_HPI_YOY_CHANGE_UK': '%'}
+    roles: {'MORTGAGE_2YR_75LTV_MO': 'line', 'UK_HPI_YOY_CHANGE_UK': 'line'}
+    axes: {'MORTGAGE_2YR_75LTV_MO': 'left', 'UK_HPI_YOY_CHANGE_UK': 'right'}
+    display_order: 1
+  HC2:
+    name: 'Regional Housing Divergence'
+    description: 'Compare UK, Greater London and North West property prices rebased at the first common observation.'
+    metrics: ['UK_HPI_AVG_PRICE_UK', 'UK_HPI_AVG_PRICE_LONDON', 'UK_HPI_AVG_PRICE_NW']
+    optional_metrics: []
+    frequency: 'Monthly'
+    chart_type: 'normalised_line'
+    units: {'UK_HPI_AVG_PRICE_UK': 'GBP', 'UK_HPI_AVG_PRICE_LONDON': 'GBP', 'UK_HPI_AVG_PRICE_NW': 'GBP'}
+    roles: {'UK_HPI_AVG_PRICE_UK': 'line', 'UK_HPI_AVG_PRICE_LONDON': 'line', 'UK_HPI_AVG_PRICE_NW': 'line'}
+    axes: {'UK_HPI_AVG_PRICE_UK': 'left', 'UK_HPI_AVG_PRICE_LONDON': 'left', 'UK_HPI_AVG_PRICE_NW': 'left'}
+    display_order: 2
+  HC3:
+    name: 'Buyer Composition and Transaction Activity'
+    description: 'England-and-Wales cash and mortgage-financed transaction composition; UK total is excluded from this stack.'
+    metrics: ['UK_HPI_CASH_SALES_VOL', 'UK_HPI_MORTGAGE_SALES_VOL', 'EW_TOTAL_TRANSACTIONS']
+    optional_metrics: []
+    frequency: 'Monthly'
+    chart_type: 'stacked_bar_line'
+    units: {'UK_HPI_CASH_SALES_VOL': 'Transactions', 'UK_HPI_MORTGAGE_SALES_VOL': 'Transactions', 'EW_TOTAL_TRANSACTIONS': 'Transactions'}
+    roles: {'UK_HPI_CASH_SALES_VOL': 'bar', 'UK_HPI_MORTGAGE_SALES_VOL': 'bar', 'EW_TOTAL_TRANSACTIONS': 'line'}
+    axes: {'UK_HPI_CASH_SALES_VOL': 'left', 'UK_HPI_MORTGAGE_SALES_VOL': 'left', 'EW_TOTAL_TRANSACTIONS': 'left'}
+    display_order: 3
+  HC4:
+    name: 'Household Borrowing'
+    description: 'Compare net secured lending with net consumer credit flows in GBP millions.'
+    metrics: ['NET_LENDING_DWELLINGS_MO', 'NET_CONSUMER_CREDIT_MO']
+    optional_metrics: []
+    frequency: 'Monthly'
+    chart_type: 'multi_line'
+    units: {'NET_LENDING_DWELLINGS_MO': 'GBP millions', 'NET_CONSUMER_CREDIT_MO': 'GBP millions'}
+    roles: {'NET_LENDING_DWELLINGS_MO': 'line', 'NET_CONSUMER_CREDIT_MO': 'line'}
+    axes: {'NET_LENDING_DWELLINGS_MO': 'left', 'NET_CONSUMER_CREDIT_MO': 'left'}
+    display_order: 4
+
+FinancialMarkets:
+  FM1:
+    name: 'UK Equity-Tier Performance'
+    description: 'Compare FTSE 100, FTSE 250 and FTSE AIM performance using trading-day observations.'
+    metrics: ['FTSE_100_close', 'FTSE_250_close', 'FTSE_AIM_close']
+    optional_metrics: []
+    frequency: 'Daily'
+    chart_type: 'normalised_line'
+    units: {'FTSE_100_close': 'Index points', 'FTSE_250_close': 'Index points', 'FTSE_AIM_close': 'Index points'}
+    metric_labels: {'FTSE_100_close': 'FTSE 100', 'FTSE_250_close': 'FTSE 250', 'FTSE_AIM_close': 'FTSE AIM'}
+    roles: {'FTSE_100_close': 'line', 'FTSE_250_close': 'line', 'FTSE_AIM_close': 'line'}
+    axes: {'FTSE_100_close': 'left', 'FTSE_250_close': 'left', 'FTSE_AIM_close': 'left'}
+    display_order: 1
+  FM2:
+    name: 'Listed Housebuilders and Official Housing Data'
+    description: 'Compare listed housebuilder performance with the official UK HPI index on a monthly, month-end basis.'
+    metrics: ['EQ_TW_close_normalised', 'EQ_BAR_close_normalised', 'UK_HPI_INDEX_UK_normalised']
+    optional_metrics: []
+    frequency: 'Monthly month-end; source series have mixed native frequencies'
+    chart_type: 'normalised_line'
+    units: {'EQ_TW_close_normalised': 'Index', 'EQ_BAR_close_normalised': 'Index', 'UK_HPI_INDEX_UK_normalised': 'Index'}
+    metric_labels: {'EQ_TW_close_normalised': 'Taylor Wimpey (rebased)', 'EQ_BAR_close_normalised': 'Barratt Redrow (rebased)', 'UK_HPI_INDEX_UK_normalised': 'UK HPI (rebased)'}
+    roles: {'EQ_TW_close_normalised': 'line', 'EQ_BAR_close_normalised': 'line', 'UK_HPI_INDEX_UK_normalised': 'line'}
+    axes: {'EQ_TW_close_normalised': 'left', 'EQ_BAR_close_normalised': 'left', 'UK_HPI_INDEX_UK_normalised': 'left'}
+    display_order: 2
+  FM3:
+    name: 'Sector Proxy Performance'
+    description: 'Compare selected company proxies; these do not represent complete sector indices.'
+    metrics: ['EQ_BARC_close', 'EQ_BP_close', 'EQ_RIO_close', 'EQ_GSK_close', 'SGE_L_close']
+    optional_metrics: []
+    frequency: 'Daily'
+    chart_type: 'normalised_line'
+    units: {'EQ_BARC_close': 'Index', 'EQ_BP_close': 'Index', 'EQ_RIO_close': 'Index', 'EQ_GSK_close': 'Index', 'SGE_L_close': 'Index'}
+    metric_labels: {'EQ_BARC_close': 'Barclays (rebased)', 'EQ_BP_close': 'BP (rebased)', 'EQ_RIO_close': 'Rio Tinto (rebased)', 'EQ_GSK_close': 'GSK (rebased)', 'SGE_L_close': 'Sage (rebased)'}
+    roles: {'EQ_BARC_close': 'line', 'EQ_BP_close': 'line', 'EQ_RIO_close': 'line', 'EQ_GSK_close': 'line', 'SGE_L_close': 'line'}
+    axes: {'EQ_BARC_close': 'left', 'EQ_BP_close': 'left', 'EQ_RIO_close': 'left', 'EQ_GSK_close': 'left', 'SGE_L_close': 'left'}
+    display_order: 3
+
+GlobalFlows:
+  GF1:
+    name: 'Sterling Performance'
+    description: 'Compare monthly sterling performance with bilateral USD and EUR per GBP spot rates; higher bilateral values indicate stronger GBP.'
+    metrics: ['STERLING_ERI_MO_normalised', 'USD_GBP_SPOT_MO_normalised', 'EUR_GBP_SPOT_MO_normalised']
+    optional_metrics: []
+    frequency: 'Monthly'
+    chart_type: 'normalised_line'
+    units: {'STERLING_ERI_MO_normalised': 'Index', 'USD_GBP_SPOT_MO_normalised': 'Index', 'EUR_GBP_SPOT_MO_normalised': 'Index'}
+    metric_labels: {'STERLING_ERI_MO_normalised': 'Sterling ERI (rebased)', 'USD_GBP_SPOT_MO_normalised': 'USD per GBP (rebased)', 'EUR_GBP_SPOT_MO_normalised': 'EUR per GBP (rebased)'}
+    roles: {'STERLING_ERI_MO_normalised': 'line', 'USD_GBP_SPOT_MO_normalised': 'line', 'EUR_GBP_SPOT_MO_normalised': 'line'}
+    axes: {'STERLING_ERI_MO_normalised': 'left', 'USD_GBP_SPOT_MO_normalised': 'left', 'EUR_GBP_SPOT_MO_normalised': 'left'}
+    display_order: 1
+  GF2:
+    name: 'Gilts, Inflation Protection and Gold'
+    description: 'Compare daily ETF price proxies and USD gold performance; ETF prices are not yields.'
+    metrics: ['ETF_UK_GILT_close_normalised', 'ETF_UK_TIPS_close_normalised', 'COM_GOLD_close_normalised']
+    optional_metrics: ['ETF_UK_TIPS_close_normalised']
+    frequency: 'Daily'
+    chart_type: 'normalised_line'
+    units: {'ETF_UK_GILT_close_normalised': 'Index', 'ETF_UK_TIPS_close_normalised': 'Index', 'COM_GOLD_close_normalised': 'Index'}
+    metric_labels: {'ETF_UK_GILT_close_normalised': 'UK gilt ETF price proxy (rebased)', 'ETF_UK_TIPS_close_normalised': 'UK index-linked gilt ETF price proxy (rebased)', 'COM_GOLD_close_normalised': 'Gold, USD/oz (rebased)'}
+    roles: {'ETF_UK_GILT_close_normalised': 'line', 'ETF_UK_TIPS_close_normalised': 'line', 'COM_GOLD_close_normalised': 'line'}
+    axes: {'ETF_UK_GILT_close_normalised': 'left', 'ETF_UK_TIPS_close_normalised': 'left', 'COM_GOLD_close_normalised': 'left'}
+    display_order: 2
+  GF3:
+    name: 'Energy Input Prices'
+    description: 'Compare Brent and WTI crude oil prices in USD per barrel with trading-day returns.'
+    metrics: ['COM_OIL_BRENT_close_normalised', 'COM_OIL_WTI_close_normalised']
+    optional_metrics: []
+    frequency: 'Daily'
+    chart_type: 'normalised_line'
+    units: {'COM_OIL_BRENT_close_normalised': 'Index', 'COM_OIL_WTI_close_normalised': 'Index'}
+    metric_labels: {'COM_OIL_BRENT_close_normalised': 'Brent (rebased)', 'COM_OIL_WTI_close_normalised': 'WTI (rebased)'}
+    roles: {'COM_OIL_BRENT_close_normalised': 'line', 'COM_OIL_WTI_close_normalised': 'line'}
+    axes: {'COM_OIL_BRENT_close_normalised': 'left', 'COM_OIL_WTI_close_normalised': 'left'}
+    display_order: 3
+
