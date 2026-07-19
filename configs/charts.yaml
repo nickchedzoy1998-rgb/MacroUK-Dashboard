@@ -54,20 +54,38 @@ Home:
 
 # Section 1
 MacroPulse:
-  # Economic Growth Momentum
+  # Economic Growth Momentum. GDP_QOQ is quarterly; GDP_YOY is yearly in the source.
   EGM:
     name: 'Economic Growth Momentum'
+    description: 'Compare quarterly GDP momentum with the latest annual growth trend.'
     metrics: ['GDP_QOQ', 'GDP_YOY']
     aggregation: 'Quarterly'
-  # Inflation Battle
+    frequency: 'Native: quarterly and yearly'
+    chart_type: 'bar_line'
+    units: {'GDP_QOQ': '%', 'GDP_YOY': '%'}
+    display_order: 1
+  # Inflation pressures. HOUSE_PRICE_GROWTH is the manifest's housing-cost inflation series.
   IB:
-    name: 'Inflation Battle'
-    metrics: ['CPI', 'CORE_CPI', 'HOUSE_PRICE_GROWTH']
+    name: 'Inflation Pressures'
+    description: 'Compare headline, derived core and available housing-cost inflation measures.'
+    metrics: ['CPI', 'CORE_CPI']
+    optional_metrics: ['HOUSE_PRICE_GROWTH']
     aggregation: 'Monthly'
-  # Labor Market Health
+    frequency: 'Monthly'
+    chart_type: 'line'
+    target: 2.0
+    units: {'CPI': '%', 'CORE_CPI': '%', 'HOUSE_PRICE_GROWTH': '%'}
+    metric_labels: {'CORE_CPI': 'Core CPI inflation (YoY)', 'HOUSE_PRICE_GROWTH': 'Housing cost inflation'}
+    transformations: {'CORE_CPI': 'year_on_year_change_from_index'}
+    display_order: 2
+  # Labour Market Health
   LBH:
-    name: 'Labor Market Health'
+    name: 'Labour Market Health'
+    description: 'Compare unemployment, employment and wage-growth indicators.'
     metrics: ['UNRATE', 'EMPRATE', 'WAGE_GROWTH']
     aggregation: 'Monthly'
+    frequency: 'Monthly'
+    chart_type: 'line'
+    units: {'UNRATE': '%', 'EMPRATE': '%', 'WAGE_GROWTH': '%'}
+    display_order: 3
 
-  

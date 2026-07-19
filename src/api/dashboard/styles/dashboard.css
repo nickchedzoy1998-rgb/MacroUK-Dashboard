@@ -1,0 +1,212 @@
+.dashboard-page-header {
+    border-bottom: 1px solid rgba(49, 51, 63, 0.14);
+    margin-bottom: 1.75rem;
+    padding: 0.35rem 0 1.25rem;
+}
+
+.dashboard-page-header__category {
+    color: #2f6690;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.4rem;
+    text-transform: uppercase;
+}
+
+.dashboard-page-header h1,
+.dashboard-section-heading h2,
+.dashboard-chart-panel__header h3,
+.dashboard-methodology-note h3 {
+    color: #1f2933;
+    letter-spacing: 0;
+}
+
+.dashboard-page-header h1 {
+    font-size: 2.3rem;
+    margin: 0 0 0.35rem;
+}
+
+.dashboard-page-header p,
+.dashboard-section-heading p,
+.dashboard-chart-panel__header p,
+.dashboard-summary-panel p,
+.dashboard-insight p,
+.dashboard-methodology-note p {
+    color: rgba(31, 41, 51, 0.72);
+    line-height: 1.5;
+    margin: 0;
+}
+
+.dashboard-eyebrow {
+    color: #2f6690;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.35rem;
+    text-transform: uppercase;
+}
+
+.dashboard-section-heading {
+    margin: 0.25rem 0 0.85rem;
+}
+
+.dashboard-section-heading h2 {
+    font-size: 1.3rem;
+    margin: 0 0 0.3rem;
+}
+
+.dashboard-section-heading p {
+    font-size: 0.9rem;
+}
+
+.dashboard-kpi-strip {
+    align-items: stretch;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    margin-bottom: 1.5rem;
+}
+
+.dashboard-kpi {
+    border: 1px solid rgba(49, 51, 63, 0.14);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    min-height: 170px;
+    padding: 1rem 1.05rem;
+}
+
+.dashboard-kpi__label,
+.dashboard-kpi__date,
+.dashboard-freshness-note {
+    color: rgba(31, 41, 51, 0.62);
+    font-size: 0.78rem;
+}
+
+.dashboard-kpi__label {
+    font-weight: 650;
+    margin-bottom: 0.5rem;
+}
+
+.dashboard-kpi__value {
+    color: #1f2933;
+    font-size: 1.8rem;
+    font-weight: 720;
+    line-height: 1.1;
+}
+
+.dashboard-kpi__delta {
+    color: #2f6690;
+    font-size: 0.88rem;
+    font-weight: 650;
+    margin-top: 0.45rem;
+    min-height: 1.25rem;
+}
+
+.dashboard-kpi__delta--positive {
+    color: #16794c;
+}
+
+.dashboard-kpi__delta--negative {
+    color: #b42318;
+}
+
+.dashboard-kpi__delta--neutral,
+.dashboard-kpi__delta--missing {
+    color: rgba(31, 41, 51, 0.55);
+}
+
+.dashboard-kpi__delta--missing {
+    visibility: hidden;
+}
+
+.dashboard-kpi__description {
+    color: rgba(31, 41, 51, 0.68);
+    font-size: 0.86rem;
+    line-height: 1.4;
+    margin: 0.65rem 0 0;
+}
+
+.dashboard-kpi__date {
+    border-top: 1px solid rgba(49, 51, 63, 0.1);
+    margin-top: auto;
+    padding-top: 0.65rem;
+}
+
+.dashboard-summary-panel,
+.dashboard-insight,
+.dashboard-methodology-note,
+.dashboard-empty-state {
+    border: 1px solid rgba(49, 51, 63, 0.12);
+    border-radius: 8px;
+    padding: 1rem 1.1rem;
+}
+
+.dashboard-summary-panel {
+    background: rgba(47, 102, 144, 0.045);
+    border-left: 4px solid #2f6690;
+    margin-bottom: 1.35rem;
+}
+
+.dashboard-summary-panel h3,
+.dashboard-methodology-note h3 {
+    font-size: 1.05rem;
+    margin: 0 0 0.35rem;
+}
+
+.dashboard-chart-panel__header {
+    margin-bottom: 0.65rem;
+}
+
+.dashboard-chart-panel__header h3 {
+    font-size: 1.05rem;
+    margin: 0 0 0.25rem;
+}
+
+.dashboard-chart-panel__header p {
+    font-size: 0.88rem;
+}
+
+.dashboard-insight {
+    background: rgba(93, 111, 120, 0.045);
+    margin: 0.7rem 0 1.2rem;
+}
+
+.dashboard-insight strong {
+    color: #2f6690;
+    display: block;
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.25rem;
+    text-transform: uppercase;
+}
+
+.dashboard-freshness-note {
+    margin: 0.65rem 0 1rem;
+}
+
+.dashboard-methodology-note {
+    background: rgba(49, 51, 63, 0.035);
+    margin-top: 1.4rem;
+}
+
+.dashboard-empty-state {
+    background: rgba(49, 51, 63, 0.035);
+    color: rgba(31, 41, 51, 0.7);
+}
+
+.dashboard-empty-state p {
+    margin: 0;
+}
+
+@media (max-width: 900px) {
+    .dashboard-kpi-strip {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 640px) {
+    .dashboard-kpi-strip {
+        grid-template-columns: 1fr;
+    }
+}

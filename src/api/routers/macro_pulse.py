@@ -4,17 +4,34 @@
 # Create web link i.e. /egm that software (dashboard) navigates to
 
 import sqlite3
+import logging
 from fastapi import FastAPI, APIRouter, Depends
+from fastapi import HTTPException
 from pathlib import Path
 from typing import List
 
 from src.utilities.config_loader import load_config
 from src.api.schemas.macro_pulse import CHART_SCHEMAS
 from src.api.dependencies import get_db_conn
+from src.api.schemas.macro_pulse import MacroPulseResponse
+from src.api.services.macro_pulse_api import MacroPulseDataError, build_macro_pulse_response
 
 # Helpers & Configs:
 macropulse_config = load_config('charts', 'MacroPulse')
 router = APIRouter()
+logger = logging.getLogger(__name__)
+
+
+@router.get("/summary", response_model=MacroPulseResponse)
+def get_macro_pulse_summary(db: sqlite3.Connection = Depends(get_db_conn)) -> MacroPulseResponse:
+    try:
+        return build_macro_pulse_response(db)
+    except MacroPulseDataError:
+        logger.error("Macro Pulse prepared data is unavailable")
+        raise HTTPException(status_code=503, detail="Macro Pulse data is currently unavailable.")
+    except Exception:
+        logger.exception("Macro Pulse response assembly failed")
+        raise HTTPException(status_code=503, detail="Macro Pulse data could not be loaded.")
 
 def table(chart_id):
     suffix = str(chart_id).lower()

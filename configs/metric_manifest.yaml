@@ -11,8 +11,8 @@ ons_metrics:
     topic: "economy/inflationandpriceindices"
     cdid: "dkc6"
     dataset: "mm23"
-    name: "Core Consumer Price Index"
-    unit: "%"
+    name: "Core Consumer Price Index (index)"
+    unit: "Index"
     frequency: "Monthly"
   GDP_QOQ:
     topic: "economy/grossdomesticproductgdp"
