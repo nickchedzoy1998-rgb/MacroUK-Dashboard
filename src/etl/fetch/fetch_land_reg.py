@@ -9,6 +9,7 @@ import pandas as pd
 from src.utilities.db_utils import get_latest_date
 from src.utilities.config_loader import load_config
 from src.utilities.http_client import fetch_json
+from src.database.database_manager import configured_database_path
 
 
 # Helpers
@@ -177,8 +178,8 @@ def load(master_df):
 
     master_df = master_df.drop_duplicates(subset=["date", "metric_id", "source"])
 
-    Path("data").mkdir(exist_ok=True)
-    db_path = Path("data") / f"{database}.db"
+    db_path = configured_database_path()
+    db_path.parent.mkdir(parents=True, exist_ok=True)
 
     conn = sqlite3.connect(db_path)
 
@@ -195,7 +196,7 @@ def load(master_df):
         print(f"Successfully loaded {len(master_df)} HMLR rows into SQLite.")
 
     except Exception as e:
-        print(f"Load failure: {e}")
+        raise RuntimeError(f"HM Land Registry load failed: {e}") from e
     finally:
         conn.close()
 

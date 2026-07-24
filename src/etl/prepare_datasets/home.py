@@ -3,6 +3,7 @@ import sqlite3
 from pathlib import Path
 
 from src.utilities.config_loader import load_config
+from src.database.database_manager import configured_database_path
 
 # CONFIGS:
 home_kpi_config = load_config('charts', 'Home')
@@ -10,7 +11,7 @@ database_config = load_config('settings', 'databases')
 
 # HELPERS:
 kpi_list = list(home_kpi_config.keys())
-db_path = Path('data') / f"{database_config['economics_db']}.db"
+db_path = configured_database_path()
 table_name = "kpi_cards"
 
 
@@ -94,8 +95,7 @@ def main():
             dataframe = get_df(kpi, conn=conn)
 
             if dataframe.empty:
-                print(f'No data found for {kpi}')
-                continue
+                raise ValueError(f"No data found for required Home KPI {kpi}")
             print('Successfully extracted dataframe')
             
             row = get_kpi_dict(kpi, dataframe)
@@ -105,8 +105,11 @@ def main():
         print('Building KPI dataframe')
         kpi_df = pd.DataFrame(rows)
         if kpi_df.empty:
-            print('No KPIs Created')
-            return kpi_df
+            raise ValueError("No Home KPIs were created")
+        if len(kpi_df) != len(kpi_list):
+            raise ValueError(
+                f"Home KPI preparation produced {len(kpi_df)} of {len(kpi_list)} required rows"
+            )
         
         print(kpi_df)
 

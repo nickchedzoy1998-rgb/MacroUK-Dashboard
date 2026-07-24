@@ -1,17 +1,15 @@
 import sqlite3
 from datetime import date
-from pathlib import Path
 from typing import Optional
 
-from src.utilities.config_loader import load_config
+from src.database.database_manager import configured_database_path
 
 
-database = load_config('settings', 'databases', 'economics_db')
-DB_PATH = Path('data') / f"{database}.db"
+DB_PATH = configured_database_path()
 
 
 def ensure_data_dir() -> None:
-    Path('data').mkdir(exist_ok=True)
+    DB_PATH.parent.mkdir(parents=True, exist_ok=True)
 
 
 def get_connection() -> sqlite3.Connection:

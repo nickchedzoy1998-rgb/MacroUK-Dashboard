@@ -6,7 +6,7 @@ def _request(url, *, headers=None, timeout=15):
     return requests.get(url, headers=headers, timeout=timeout)
 
 
-def fetch_json(url, user_agent=False):
+def fetch_json(url, user_agent=False, *, timeout=15):
     """Hits the API URL and returns parsed JSON response."""
     if user_agent is False:
         urls_to_try = [url]
@@ -18,7 +18,7 @@ def fetch_json(url, user_agent=False):
         last_error = None
         for candidate in urls_to_try:
             try:
-                response = _request(candidate)
+                response = _request(candidate, timeout=timeout)
                 response.raise_for_status()
                 return response.json()
             except JSONDecodeError as e:
@@ -40,7 +40,7 @@ def fetch_json(url, user_agent=False):
     }
 
     try:
-        response = _request(url, headers=headers)
+        response = _request(url, headers=headers, timeout=timeout)
         response.raise_for_status()
         return response.url
 

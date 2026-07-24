@@ -7,9 +7,8 @@ from typing import Any
 import streamlit as st
 
 from src.api.dashboard.components.chart_components import build_buyer_composition_figure, build_household_borrowing_figure, build_mortgage_housing_figure, build_regional_housing_figure, render_plotly_chart
+from src.api.dashboard.data_loader import load_housing_credit_data
 from src.api.dashboard.components.shared_components import inject_dashboard_styles, render_analytical_page_header, render_chart_insight, render_chart_panel_header, render_data_freshness_note, render_empty_state, render_kpi_strip, render_methodology_note, render_page_summary, render_section_heading
-from src.utilities.build_url import build_chart_endpoint
-from src.utilities.http_client import fetch_json
 
 BUILDERS = {"HC1": build_mortgage_housing_figure, "HC2": build_regional_housing_figure, "HC3": build_buyer_composition_figure, "HC4": build_household_borrowing_figure}
 
@@ -20,8 +19,8 @@ def _valid(response: object) -> bool:
 
 def render_page() -> None:
     inject_dashboard_styles()
-    try: response = fetch_json(build_chart_endpoint("HousingCredit", "summary"), False)
-    except Exception: st.error("Housing and Consumer Credit data could not be loaded. FastAPI or the preparation pipeline may not be running."); st.stop()
+    try: response = load_housing_credit_data()
+    except Exception: st.error("Housing and Consumer Credit data could not be loaded from the local warehouse."); st.stop()
     if not _valid(response): st.error("Housing and Consumer Credit returned an invalid response and could not be displayed."); st.stop()
     page = response["page"]; render_analytical_page_header(page["title"], page["description"], category="Housing & Credit"); render_section_heading("Headline indicators"); render_kpi_strip(response["kpis"]); render_page_summary(response.get("summary"), label="Current assessment")
     for chart in response["charts"]:

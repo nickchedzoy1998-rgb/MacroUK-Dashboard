@@ -10,10 +10,11 @@ import pandas as pd
 
 from src.analytics.chart_transforms import coverage_report, normalise_to_common_baseline, prepare_time_series
 from src.utilities.config_loader import load_config
+from src.database.database_manager import configured_database_path
 
 
 DATABASE = load_config("settings", "databases", "economics_db")
-DB_PATH = Path("data") / f"{DATABASE}.db"
+DB_PATH = configured_database_path()
 HC1_REQUIRED = ("MORTGAGE_2YR_75LTV_MO", "UK_HPI_YOY_CHANGE_UK")
 HC2_REQUIRED = ("UK_HPI_AVG_PRICE_UK", "UK_HPI_AVG_PRICE_LONDON", "UK_HPI_AVG_PRICE_NW")
 HC3_REQUIRED = ("UK_HPI_CASH_SALES_VOL", "UK_HPI_MORTGAGE_SALES_VOL")

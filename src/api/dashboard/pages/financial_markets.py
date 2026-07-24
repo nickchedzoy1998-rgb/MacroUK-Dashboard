@@ -10,9 +10,8 @@ from src.api.dashboard.components.chart_components import (
     build_financial_markets_figure,
     render_plotly_chart,
 )
+from src.api.dashboard.data_loader import load_financial_markets_data
 from src.api.dashboard.components.shared_components import inject_dashboard_styles, render_analytical_page_header, render_chart_insight, render_chart_panel_header, render_data_freshness_note, render_empty_state, render_kpi_strip, render_methodology_note, render_page_summary, render_section_heading
-from src.utilities.build_url import build_chart_endpoint
-from src.utilities.http_client import fetch_json
 
 
 def _valid(response: object) -> bool:
@@ -22,9 +21,9 @@ def _valid(response: object) -> bool:
 def render_page() -> None:
     inject_dashboard_styles()
     try:
-        response = fetch_json(build_chart_endpoint("FinancialMarkets", "summary"), False)
+        response = load_financial_markets_data()
     except Exception as exc:
-        st.error(f"Financial Markets data could not be loaded: {exc}")
+        st.error(f"Financial Markets data could not be loaded from the local warehouse: {exc}")
         st.stop()
     if not _valid(response):
         st.error("Financial Markets returned an invalid response and could not be displayed.")

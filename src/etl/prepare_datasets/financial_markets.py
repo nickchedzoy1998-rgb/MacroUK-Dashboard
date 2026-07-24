@@ -17,10 +17,11 @@ from src.analytics.chart_transforms import (
     year_to_date_return,
 )
 from src.utilities.config_loader import load_config
+from src.database.database_manager import configured_database_path
 
 
 DATABASE = load_config("settings", "databases", "economics_db")
-DB_PATH = Path("data") / f"{DATABASE}.db"
+DB_PATH = configured_database_path()
 
 FM1_REQUIRED = ("FTSE_100_close", "FTSE_250_close", "FTSE_AIM_close")
 FM2_HOUSEBUILDERS = ("EQ_TW_close", "EQ_BAR_close")

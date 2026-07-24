@@ -31,3 +31,24 @@ def test_fetch_json_retries_common_local_ports(monkeypatch):
     assert response == {"ok": True}
     assert calls[0].endswith(":8000/api/financial-markets/summary")
     assert calls[1].endswith(":8001/api/financial-markets/summary")
+
+
+def test_fetch_json_propagates_an_explicit_timeout(monkeypatch):
+    observed = []
+
+    def fake_get(url, timeout=15, headers=None):
+        observed.append(timeout)
+
+        class Response:
+            def raise_for_status(self):
+                return None
+
+            def json(self):
+                return {"ok": True}
+
+        return Response()
+
+    monkeypatch.setattr(http_client.requests, "get", fake_get)
+
+    assert http_client.fetch_json("http://example.test/data", timeout=45) == {"ok": True}
+    assert observed == [45]
