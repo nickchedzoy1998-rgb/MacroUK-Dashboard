@@ -23,34 +23,27 @@ def render_analytical_page_header(
     category: str | None = None,
 ) -> None:
     eyebrow = f'<div class="dashboard-page-header__category">{escape(category)}</div>' if category else ""
-    st.markdown(
-        f"""
-        <section class="dashboard-page-header">
-            {eyebrow}
-            <h1>{escape(title)}</h1>
-            <p>{escape(description)}</p>
-        </section>
-        """.strip(),
-        unsafe_allow_html=True,
+    html = (
+        '<section class="dashboard-page-header">'
+        f"{eyebrow}<h1>{escape(title)}</h1><p>{escape(description)}</p>"
+        "</section>"
     )
+    st.markdown(html, unsafe_allow_html=True)
 
 
 def render_section_heading(title: str, subtitle: str | None = None) -> None:
     subtitle_html = f'<p>{escape(subtitle)}</p>' if subtitle else ""
-    st.markdown(
-        f"""
-        <div class="dashboard-section-heading">
-            <h2>{escape(title)}</h2>
-            {subtitle_html}
-        </div>
-        """.strip(),
-        unsafe_allow_html=True,
+    html = (
+        '<div class="dashboard-section-heading">'
+        f"<h2>{escape(title)}</h2>{subtitle_html}"
+        "</div>"
     )
+    st.markdown(html, unsafe_allow_html=True)
 
 
 def render_kpi_strip(kpis: Sequence[Mapping[str, Any]]) -> None:
     """Render prepared KPI records without querying or transforming data."""
-    cards = []
+    cards: list[str] = []
     for kpi in kpis:
         value = kpi.get("value")
         value_display = _format_kpi_value(value, kpi.get("main_unit"))
@@ -66,17 +59,16 @@ def render_kpi_strip(kpis: Sequence[Mapping[str, Any]]) -> None:
         date = kpi.get("date") or kpi.get("latest_date")
         date_html = f'<div class="dashboard-kpi__date">Latest: {escape(str(date))}</div>' if date else ""
         cards.append(
-            f"""
-                <article class="dashboard-kpi">
-                    <div class="dashboard-kpi__label">{escape(str(kpi.get('label', kpi.get('name', ''))))}</div>
-                <div class="dashboard-kpi__value">{escape(value_display)}</div>
-                {delta_html}
-                <p class="dashboard-kpi__description">{escape(str(kpi.get('description', '')))}</p>
-                {date_html}
-            </article>
-            """.strip()
+            '<article class="dashboard-kpi">'
+            f'<div class="dashboard-kpi__label">{escape(str(kpi.get("label", kpi.get("name", ""))))}</div>'
+            f'<div class="dashboard-kpi__value">{escape(value_display)}</div>'
+            f"{delta_html}"
+            f'<p class="dashboard-kpi__description">{escape(str(kpi.get("description", "")))}</p>'
+            f"{date_html}"
+            "</article>"
         )
-    st.markdown('<section class="dashboard-kpi-strip">' + "".join(cards) + "</section>", unsafe_allow_html=True)
+    html = '<section class="dashboard-kpi-strip">' + "".join(cards) + "</section>"
+    st.markdown(html, unsafe_allow_html=True)
 
 
 def _format_kpi_value(value: Any, unit: Any, *, signed: bool = False) -> str:
@@ -102,15 +94,12 @@ def _kpi_delta_class(delta: Any, direction: Any) -> str:
 
 def render_chart_panel_header(title: str, subtitle: str | None = None) -> None:
     subtitle_html = f'<p>{escape(subtitle)}</p>' if subtitle else ""
-    st.markdown(
-        f"""
-        <div class="dashboard-chart-panel__header">
-            <h3>{escape(title)}</h3>
-            {subtitle_html}
-        </div>
-        """.strip(),
-        unsafe_allow_html=True,
+    html = (
+        '<div class="dashboard-chart-panel__header">'
+        f"<h3>{escape(title)}</h3>{subtitle_html}"
+        "</div>"
     )
+    st.markdown(html, unsafe_allow_html=True)
 
 
 def render_page_summary(summary: Mapping[str, Any] | None, *, label: str | None = None) -> None:
@@ -120,16 +109,15 @@ def render_page_summary(summary: Mapping[str, Any] | None, *, label: str | None 
     body = summary.get("body")
     if not headline and not body:
         return
-    st.markdown(
-        f"""
-        <section class="dashboard-summary-panel">
-            {f'<div class="dashboard-eyebrow">{escape(label)}</div>' if label else ''}
-            {f'<h3>{escape(str(headline))}</h3>' if headline else ''}
-            {f'<p>{escape(str(body))}</p>' if body else ''}
-        </section>
-        """.strip(),
-        unsafe_allow_html=True,
+    eyebrow_html = f'<div class="dashboard-eyebrow">{escape(label)}</div>' if label else ""
+    headline_html = f"<h3>{escape(str(headline))}</h3>" if headline else ""
+    body_html = f"<p>{escape(str(body))}</p>" if body else ""
+    html = (
+        '<section class="dashboard-summary-panel">'
+        f"{eyebrow_html}{headline_html}{body_html}"
+        "</section>"
     )
+    st.markdown(html, unsafe_allow_html=True)
 
 
 def render_chart_insight(text: str | None, *, label: str = "Insight") -> None:
@@ -146,10 +134,12 @@ def render_data_freshness_note(text: str) -> None:
 
 
 def render_methodology_note(text: str) -> None:
-    st.markdown(
-        f'<section class="dashboard-methodology-note"><h3>Methodology</h3><p>{escape(text)}</p></section>',
-        unsafe_allow_html=True,
+    html = (
+        '<section class="dashboard-methodology-note">'
+        f"<h3>Methodology</h3><p>{escape(text)}</p>"
+        "</section>"
     )
+    st.markdown(html, unsafe_allow_html=True)
 
 
 def render_empty_state(message: str = "No data is available for this view.") -> None:

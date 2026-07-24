@@ -28,8 +28,9 @@ class FinancialMarketsServiceTests(unittest.TestCase):
         )
         insights = build_financial_markets_insights({"FM3": frame})
         self.assertEqual(len(insights), 1)
-        self.assertIn("EQ_RIO_close", insights[0]["body"])
-        self.assertIn("EQ_GSK_close", insights[0]["body"])
+        self.assertIn("Rio Tinto", insights[0]["body"])
+        self.assertIn("GSK", insights[0]["body"])
+        self.assertNotIn("EQ_", insights[0]["body"])
 
 
 if __name__ == "__main__":

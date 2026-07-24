@@ -6,6 +6,8 @@ from typing import Any, Mapping, Sequence
 
 import pandas as pd
 
+from src.utilities.config_loader import load_config, resolve_metric_label
+
 
 CHANGE_EPSILON = 0.05
 
@@ -44,9 +46,17 @@ def build_housing_credit_insights(datasets: Mapping[str, pd.DataFrame]) -> list[
     if mortgage is not None or house is not None: result.append({"chart_id": "HC1", "headline": "Mortgage and house-price momentum", "body": f"Mortgage rates are {_state(mortgage - mortgage_previous) if mortgage is not None and mortgage_previous is not None else 'available'}; annual house-price growth is {house:.1f}%" if house is not None else "Mortgage-rate data is available; house-price growth is not available.", "direction": "negative" if mortgage is not None and mortgage_previous is not None and mortgage > mortgage_previous else "positive" if house is not None and house >= 0 else "neutral", "as_of_date": max(d for d in (mortgage_date, house_date) if d is not None).date().isoformat()})
     hc2 = datasets.get("HC2"); normalised = [column for column in hc2.columns if column.endswith("_normalised")] if hc2 is not None else []
     if normalised:
-        latest = hc2.dropna(subset=normalised).iloc[-1]; values = {column: float(latest[column]) for column in normalised}; highest = max(values, key=values.get); lowest = min(values, key=values.get); result.append({"chart_id": "HC2", "headline": "Regional housing divergence", "body": f"{highest.replace('_normalised','')} has the highest rebased value and {lowest.replace('_normalised','')} the lowest at the latest common observation.", "direction": "neutral", "as_of_date": pd.Timestamp(latest.date).date().isoformat()})
+        labels = (load_config("charts", "HousingCredit", "HC2") or {}).get("metric_labels", {})
+        latest = hc2.dropna(subset=normalised).iloc[-1]
+        values = {column: float(latest[column]) for column in normalised}
+        highest = resolve_metric_label(max(values, key=values.get), labels)
+        lowest = resolve_metric_label(min(values, key=values.get), labels)
+        result.append({"chart_id": "HC2", "headline": "Regional housing divergence", "body": f"{highest} has the highest rebased value and {lowest} the lowest at the latest common observation.", "direction": "neutral", "as_of_date": pd.Timestamp(latest.date).date().isoformat()})
     hc3 = datasets.get("HC3"); cash, _, cash_date = _latest(hc3, "CASH_SHARE_PCT") if hc3 is not None else (None, None, None)
     if cash is not None: result.append({"chart_id": "HC3", "headline": "Buyer composition", "body": f"Cash-financed transactions represent {cash:.1f}% of the derived England-and-Wales total at the latest valid observation.", "direction": "neutral", "as_of_date": cash_date.date().isoformat()})
     hc4 = datasets.get("HC4"); secured, _, secured_date = _latest(hc4, "NET_LENDING_DWELLINGS_MO") if hc4 is not None else (None, None, None); consumer, _, consumer_date = _latest(hc4, "NET_CONSUMER_CREDIT_MO") if hc4 is not None else (None, None, None)
-    if secured is not None or consumer is not None: result.append({"chart_id": "HC4", "headline": "Household borrowing", "body": f"Net secured lending is {secured:.0f} GBP millions" if secured is not None else "Net secured lending is unavailable." + (f"; net consumer credit is {consumer:.0f} GBP millions." if consumer is not None else ""), "direction": "neutral", "as_of_date": max(d for d in (secured_date, consumer_date) if d is not None).date().isoformat()})
+    if secured is not None or consumer is not None:
+        secured_text = f"Net secured lending is {secured:.0f} GBP millions" if secured is not None else "Net secured lending is unavailable"
+        consumer_text = f"net consumer credit is {consumer:.0f} GBP millions" if consumer is not None else "net consumer credit is unavailable"
+        result.append({"chart_id": "HC4", "headline": "Household borrowing", "body": f"{secured_text}; {consumer_text}.", "direction": "neutral", "as_of_date": max(d for d in (secured_date, consumer_date) if d is not None).date().isoformat()})
     return result

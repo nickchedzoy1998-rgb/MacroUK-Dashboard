@@ -6,6 +6,8 @@ from typing import Any, Mapping
 
 import pandas as pd
 
+from src.utilities.config_loader import load_config, resolve_metric_label
+
 
 EPSILON = 0.05
 
@@ -46,7 +48,11 @@ def build_global_flows_insights(datasets: Mapping[str, pd.DataFrame]) -> list[di
         columns = [c for c in gf2.columns if c.endswith("_normalised")]
         valid = gf2.dropna(subset=columns) if columns else pd.DataFrame()
         if not valid.empty:
-            row = valid.iloc[-1]; values = {c: float(row[c]) for c in columns}; best = max(values, key=values.get).replace("_normalised", ""); weakest = min(values, key=values.get).replace("_normalised", "")
+            labels = (load_config("charts", "GlobalFlows", "GF2") or {}).get("metric_labels", {})
+            row = valid.iloc[-1]
+            values = {c: float(row[c]) for c in columns}
+            best = resolve_metric_label(max(values, key=values.get), labels)
+            weakest = resolve_metric_label(min(values, key=values.get), labels)
             result.append({"chart_id": "GF2", "headline": "Fixed income and gold comparison", "body": f"{best} is highest and {weakest} lowest at the latest common rebased observation. Relative performance does not establish inflation expectations.", "direction": "neutral", "as_of_date": pd.Timestamp(row.date).date().isoformat()})
     gf3 = datasets.get("GF3")
     if gf3 is not None and not gf3.empty:

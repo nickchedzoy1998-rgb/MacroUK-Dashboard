@@ -21,7 +21,7 @@ from src.api.schemas.macro_pulse import (
 )
 from src.api.services.macro_pulse import build_macro_pulse_insights, build_macro_pulse_summary
 from src.etl.prepare_datasets.macro_pulse import prepare_macro_pulse_kpis
-from src.utilities.config_loader import load_config
+from src.utilities.config_loader import load_config, resolve_metric_label
 
 
 CHART_ORDER = ("EGM", "IB", "LBH")
@@ -56,7 +56,7 @@ def _series_metadata(chart_id: str, config: dict[str, Any]) -> list[ChartSeriesM
     return [
         ChartSeriesMetadata(
             metric=metric,
-            label=labels.get(metric, metric),
+            label=resolve_metric_label(metric, labels),
             unit=units.get(metric, "%"),
             role=roles[chart_id].get(metric, ("line", "left"))[0],
             axis=roles[chart_id].get(metric, ("line", "left"))[1],
