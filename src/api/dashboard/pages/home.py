@@ -12,14 +12,12 @@ from src.api.dashboard.components.home_components import (
     render_kpi_grid,
     render_section_heading,
 )
-from src.utilities.build_url import build_chart_endpoint
-from src.utilities.http_client import fetch_json
+from src.api.dashboard.data_loader import load_home_data
 
 
 def stop_for_home_data_error() -> None:
     st.error(
-        "Homepage data could not be loaded. FastAPI or the preparation "
-        "pipeline may not be running."
+        "Homepage data could not be loaded from the local warehouse."
     )
     st.stop()
 
@@ -51,9 +49,8 @@ def get_optional_home_highlights(response: object) -> list[dict[str, Any]]:
     return highlights if isinstance(highlights, list) else []
 
 
-endpoint = build_chart_endpoint("Home", "summary")
 try:
-    response = fetch_json(endpoint, False)
+    response = load_home_data()
 except Exception:
     stop_for_home_data_error()
 

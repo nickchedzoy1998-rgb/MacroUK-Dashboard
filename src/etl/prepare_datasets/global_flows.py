@@ -10,10 +10,11 @@ import pandas as pd
 
 from src.analytics.chart_transforms import coverage_report, normalise_to_common_baseline, prepare_time_series, return_over_observations
 from src.utilities.config_loader import load_config
+from src.database.database_manager import configured_database_path
 
 
 DATABASE = load_config("settings", "databases", "economics_db")
-DB_PATH = Path("data") / f"{DATABASE}.db"
+DB_PATH = configured_database_path()
 GF1_REQUIRED = ("STERLING_ERI_MO", "USD_GBP_SPOT_MO", "EUR_GBP_SPOT_MO")
 GF2_REQUIRED = ("ETF_UK_GILT_close", "COM_GOLD_close")
 GF2_OPTIONAL = ("ETF_UK_TIPS_close",)

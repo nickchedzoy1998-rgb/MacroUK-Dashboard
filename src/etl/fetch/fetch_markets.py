@@ -6,6 +6,7 @@ import sqlite3
 
 from src.utilities.db_utils import get_latest_date
 from src.utilities.config_loader import load_config
+from src.database.database_manager import configured_database_path
 
 # Helpers
 y_config = load_config('metric_manifest', 'y_finance_metrics')
@@ -124,8 +125,12 @@ def load(master_df):
     data and using `INSERT OR IGNORE` against a target table with a primary key.
     """
 
-    Path("data").mkdir(exist_ok=True)
-    db_path = Path("data") / (database + ".db")
+    if master_df is None or master_df.empty:
+        print("Yahoo Finance ETL: no new rows to load.")
+        return
+
+    db_path = configured_database_path()
+    db_path.parent.mkdir(parents=True, exist_ok=True)
 
     conn = sqlite3.connect(db_path)
 
@@ -142,7 +147,7 @@ def load(master_df):
         print(f"Successfully loaded {len(master_df)} rows into SQLite.")
 
     except Exception as e:
-        print(f"Load failure: {e}")
+        raise RuntimeError(f"Yahoo Finance load failed: {e}") from e
     finally:
         conn.close()
 

@@ -8,6 +8,7 @@ from src.utilities.db_utils import get_latest_date
 from src.utilities.config_loader import load_config
 from src.utilities.http_client import fetch_json
 from src.utilities.build_url import build_ons
+from src.database.database_manager import configured_database_path
 
 # Helpers
 database = load_config('settings', 'databases', 'economics_db')
@@ -93,8 +94,8 @@ def load(df):
 
     df = df.drop_duplicates(subset=['date', 'metric_id', 'source'])
 
-    Path("data").mkdir(exist_ok=True)
-    db_path = Path("data") / (database + ".db")
+    db_path = configured_database_path()
+    db_path.parent.mkdir(parents=True, exist_ok=True)
 
     conn = sqlite3.connect(db_path)
 
@@ -111,7 +112,7 @@ def load(df):
         print(f"Successfully loaded {len(df)} rows into SQLite.")
 
     except Exception as e:
-        print(f"Load failure: {e}")
+        raise RuntimeError(f"ONS load failed: {e}") from e
     finally:
         conn.close()
 

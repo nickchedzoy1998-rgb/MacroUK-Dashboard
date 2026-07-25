@@ -24,8 +24,7 @@ from src.api.dashboard.components.shared_components import (
     render_page_summary,
     render_section_heading,
 )
-from src.utilities.build_url import build_chart_endpoint
-from src.utilities.http_client import fetch_json
+from src.api.dashboard.data_loader import load_macro_pulse_data
 
 
 CHART_BUILDERS = {
@@ -47,12 +46,11 @@ def stop_for_api_error(message: str) -> None:
 
 
 def get_macro_pulse_response() -> dict[str, Any]:
-    endpoint = build_chart_endpoint("MacroPulse", "summary")
     try:
-        response = fetch_json(endpoint, False)
+        response = load_macro_pulse_data()
     except Exception:
         stop_for_api_error(
-            "Macro Pulse data could not be loaded. FastAPI or the preparation pipeline may not be running."
+            "Macro Pulse data could not be loaded from the local warehouse."
         )
 
     if not _valid_response(response):

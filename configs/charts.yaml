@@ -33,7 +33,7 @@ Home:
     comparison_label: "at last rate change"
     main_unit: "%"
     delta_unit: "pp"
-    description: "The Bank of England’s current policy interest rate."
+    description: "The Bank of England's current policy interest rate."
   HOUSE_PRICE_GROWTH:
     name: "House Price Growth Rate"
     metric: "UK_HPI_YOY_CHANGE_UK"
@@ -63,6 +63,7 @@ MacroPulse:
     frequency: 'Native: quarterly and yearly'
     chart_type: 'bar_line'
     units: {'GDP_QOQ': '%', 'GDP_YOY': '%'}
+    metric_labels: {'GDP_QOQ': 'Quarterly GDP growth', 'GDP_YOY': 'Annual GDP growth'}
     display_order: 1
   # Inflation pressures. HOUSE_PRICE_GROWTH is the manifest's housing-cost inflation series.
   IB:
@@ -75,7 +76,7 @@ MacroPulse:
     chart_type: 'line'
     target: 2.0
     units: {'CPI': '%', 'CORE_CPI': '%', 'HOUSE_PRICE_GROWTH': '%'}
-    metric_labels: {'CORE_CPI': 'Core CPI inflation (YoY)', 'HOUSE_PRICE_GROWTH': 'Housing cost inflation'}
+    metric_labels: {'CPI': 'Headline CPI inflation', 'CORE_CPI': 'Core CPI inflation', 'HOUSE_PRICE_GROWTH': 'Housing-cost inflation'}
     transformations: {'CORE_CPI': 'year_on_year_change_from_index'}
     display_order: 2
   # Labour Market Health
@@ -87,6 +88,7 @@ MacroPulse:
     frequency: 'Monthly'
     chart_type: 'line'
     units: {'UNRATE': '%', 'EMPRATE': '%', 'WAGE_GROWTH': '%'}
+    metric_labels: {'UNRATE': 'Unemployment rate', 'EMPRATE': 'Employment rate', 'WAGE_GROWTH': 'Wage growth'}
     display_order: 3
 
 MonetaryPolicy:
@@ -110,6 +112,7 @@ MonetaryPolicy:
     frequency: 'Monthly'
     chart_type: 'multi_line'
     units: {'M4_GROWTH_MO': '%', 'NOTES_COINS_GROWTH_MO': '%'}
+    metric_labels: {'M4_GROWTH_MO': 'Broad money growth', 'NOTES_COINS_GROWTH_MO': 'Notes and coin growth'}
     roles: {'M4_GROWTH_MO': 'line', 'NOTES_COINS_GROWTH_MO': 'line'}
     axes: {'M4_GROWTH_MO': 'left', 'NOTES_COINS_GROWTH_MO': 'left'}
     display_order: 2
@@ -121,6 +124,7 @@ MonetaryPolicy:
     frequency: 'Monthly'
     chart_type: 'bar_line'
     units: {'CORP_OVERDRAFT_COST_MO': '%', 'NET_LENDING_CORP_MO': '%'}
+    metric_labels: {'CORP_OVERDRAFT_COST_MO': 'Corporate borrowing cost', 'NET_LENDING_CORP_MO': 'Business lending growth'}
     roles: {'CORP_OVERDRAFT_COST_MO': 'line', 'NET_LENDING_CORP_MO': 'bar'}
     axes: {'CORP_OVERDRAFT_COST_MO': 'left', 'NET_LENDING_CORP_MO': 'right'}
     display_order: 3
@@ -134,6 +138,7 @@ HousingCredit:
     frequency: 'Monthly'
     chart_type: 'dual_line'
     units: {'MORTGAGE_2YR_75LTV_MO': '%', 'UK_HPI_YOY_CHANGE_UK': '%'}
+    metric_labels: {'MORTGAGE_2YR_75LTV_MO': 'Two-year fixed mortgage rate', 'UK_HPI_YOY_CHANGE_UK': 'UK house-price growth'}
     roles: {'MORTGAGE_2YR_75LTV_MO': 'line', 'UK_HPI_YOY_CHANGE_UK': 'line'}
     axes: {'MORTGAGE_2YR_75LTV_MO': 'left', 'UK_HPI_YOY_CHANGE_UK': 'right'}
     display_order: 1
@@ -145,6 +150,7 @@ HousingCredit:
     frequency: 'Monthly'
     chart_type: 'normalised_line'
     units: {'UK_HPI_AVG_PRICE_UK': 'GBP', 'UK_HPI_AVG_PRICE_LONDON': 'GBP', 'UK_HPI_AVG_PRICE_NW': 'GBP'}
+    metric_labels: {'UK_HPI_AVG_PRICE_UK': 'United Kingdom', 'UK_HPI_AVG_PRICE_LONDON': 'Greater London', 'UK_HPI_AVG_PRICE_NW': 'North West'}
     roles: {'UK_HPI_AVG_PRICE_UK': 'line', 'UK_HPI_AVG_PRICE_LONDON': 'line', 'UK_HPI_AVG_PRICE_NW': 'line'}
     axes: {'UK_HPI_AVG_PRICE_UK': 'left', 'UK_HPI_AVG_PRICE_LONDON': 'left', 'UK_HPI_AVG_PRICE_NW': 'left'}
     display_order: 2
@@ -156,6 +162,7 @@ HousingCredit:
     frequency: 'Monthly'
     chart_type: 'stacked_bar_line'
     units: {'UK_HPI_CASH_SALES_VOL': 'Transactions', 'UK_HPI_MORTGAGE_SALES_VOL': 'Transactions', 'EW_TOTAL_TRANSACTIONS': 'Transactions'}
+    metric_labels: {'UK_HPI_CASH_SALES_VOL': 'Cash-financed sales', 'UK_HPI_MORTGAGE_SALES_VOL': 'Mortgage-financed sales', 'EW_TOTAL_TRANSACTIONS': 'Total transactions'}
     roles: {'UK_HPI_CASH_SALES_VOL': 'bar', 'UK_HPI_MORTGAGE_SALES_VOL': 'bar', 'EW_TOTAL_TRANSACTIONS': 'line'}
     axes: {'UK_HPI_CASH_SALES_VOL': 'left', 'UK_HPI_MORTGAGE_SALES_VOL': 'left', 'EW_TOTAL_TRANSACTIONS': 'left'}
     display_order: 3
@@ -167,6 +174,7 @@ HousingCredit:
     frequency: 'Monthly'
     chart_type: 'multi_line'
     units: {'NET_LENDING_DWELLINGS_MO': 'GBP millions', 'NET_CONSUMER_CREDIT_MO': 'GBP millions'}
+    metric_labels: {'NET_LENDING_DWELLINGS_MO': 'Net secured lending', 'NET_CONSUMER_CREDIT_MO': 'Net consumer credit'}
     roles: {'NET_LENDING_DWELLINGS_MO': 'line', 'NET_CONSUMER_CREDIT_MO': 'line'}
     axes: {'NET_LENDING_DWELLINGS_MO': 'left', 'NET_CONSUMER_CREDIT_MO': 'left'}
     display_order: 4

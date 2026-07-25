@@ -273,13 +273,10 @@
 }
 
 .home-nav-card {
-    background: #ffffff;
-    border: 1px solid rgba(49, 51, 63, 0.14);
-    border-radius: 8px;
     display: flex;
     flex-direction: column;
-    min-height: 142px;
-    padding: 1rem 1.05rem;
+    min-height: 102px;
+    padding: 0.15rem 0.1rem 0;
 }
 
 .home-nav-card h3 {
@@ -296,22 +293,6 @@
     font-size: 0.9rem;
     line-height: 1.4;
     margin: 0 0 0.85rem;
-}
-
-.home-nav-card__status {
-    border-top: 1px solid rgba(49, 51, 63, 0.10);
-    font-size: 0.78rem;
-    font-weight: 700;
-    margin-top: auto;
-    padding-top: 0.7rem;
-}
-
-.home-nav-card__status--active {
-    color: #2f6690;
-}
-
-.home-nav-card__status--soon {
-    color: rgba(31, 41, 51, 0.48);
 }
 
 .home-data-note {

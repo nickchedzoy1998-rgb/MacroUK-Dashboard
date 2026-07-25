@@ -21,7 +21,7 @@ from src.api.schemas.monetary_policy import (
 )
 from src.api.services.monetary_policy import build_monetary_policy_insights, build_monetary_policy_summary
 from src.etl.prepare_datasets.monetary_policy import prepare_monetary_policy_kpis
-from src.utilities.config_loader import load_config
+from src.utilities.config_loader import load_config, resolve_metric_label
 
 
 CHART_ORDER = ("MP1", "MP2", "MP3")
@@ -80,7 +80,7 @@ def build_monetary_policy_response(conn: sqlite3.Connection) -> MonetaryPolicyRe
         roles = chart_config.get("roles", {})
         axes = chart_config.get("axes", {})
         metadata = [
-            ChartSeriesMetadata(metric=metric, label=labels.get(metric, metric), unit=units.get(metric, "%"), role=roles.get(metric, "line"), axis=axes.get(metric, "left"), display_order=index, optional=metric in optional)
+            ChartSeriesMetadata(metric=metric, label=resolve_metric_label(metric, labels), unit=units.get(metric, "%"), role=roles.get(metric, "line"), axis=axes.get(metric, "left"), display_order=index, optional=metric in optional)
             for index, metric in enumerate(all_metrics, start=1)
         ]
         charts.append(

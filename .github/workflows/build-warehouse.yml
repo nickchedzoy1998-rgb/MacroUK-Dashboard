@@ -1,0 +1,84 @@
+name: Build and publish warehouse
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "30 5 * * *"
+  push:
+    paths:
+      - "src/etl/**"
+      - "src/validation/**"
+      - "src/database/**"
+      - "configs/**"
+      - "requirements.txt"
+      - ".github/workflows/build-warehouse.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: macrouk-warehouse
+  cancel-in-progress: false
+
+jobs:
+  build-warehouse:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.OBJECT_STORAGE_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.OBJECT_STORAGE_SECRET_ACCESS_KEY }}
+      AWS_DEFAULT_REGION: ${{ secrets.OBJECT_STORAGE_REGION }}
+      OBJECT_STORAGE_ENDPOINT: ${{ secrets.OBJECT_STORAGE_ENDPOINT }}
+      OBJECT_STORAGE_BUCKET: ${{ secrets.OBJECT_STORAGE_BUCKET }}
+      OBJECT_STORAGE_DATABASE_KEY: ${{ secrets.OBJECT_STORAGE_DATABASE_KEY }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+
+      - name: Install dependencies
+        run: python -m pip install --upgrade pip && python -m pip install -r requirements.txt
+
+      - name: Restore latest warehouse for incremental refresh
+        shell: bash
+        run: |
+          mkdir -p data
+          key="${OBJECT_STORAGE_DATABASE_KEY:-economic_warehouse.db}"
+          if [ -n "$OBJECT_STORAGE_ENDPOINT" ] && [ -n "$OBJECT_STORAGE_BUCKET" ]; then
+            aws s3 cp "s3://${OBJECT_STORAGE_BUCKET}/${key}" data/economic_warehouse.db \
+              --endpoint-url "$OBJECT_STORAGE_ENDPOINT" \
+              || echo "No previous warehouse found; starting a clean build."
+          else
+            echo "Object-storage restore is not configured; starting a clean build."
+          fi
+
+      - name: Run complete ETL pipeline
+        run: python -m src.etl.pipeline_runner
+
+      - name: Validate warehouse
+        run: python -m src.validation.validate_warehouse
+
+      - name: Run test suite
+        run: python -m pytest -q
+
+      - name: Verify upload configuration
+        shell: bash
+        run: |
+          test -n "$OBJECT_STORAGE_ENDPOINT"
+          test -n "$OBJECT_STORAGE_BUCKET"
+          test -n "$AWS_ACCESS_KEY_ID"
+          test -n "$AWS_SECRET_ACCESS_KEY"
+
+      - name: Upload validated warehouse
+        shell: bash
+        run: |
+          key="${OBJECT_STORAGE_DATABASE_KEY:-economic_warehouse.db}"
+          aws s3 cp data/economic_warehouse.db "s3://${OBJECT_STORAGE_BUCKET}/${key}" \
+            --endpoint-url "$OBJECT_STORAGE_ENDPOINT" \
+            --content-type application/vnd.sqlite3

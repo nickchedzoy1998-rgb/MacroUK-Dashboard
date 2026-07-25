@@ -11,7 +11,7 @@ from src.api.schemas.global_flows import GlobalFlowsChart, GlobalFlowsKPI, Globa
 from src.api.schemas.macro_pulse import ChartCoverage, ChartInsight, ChartRecord, ChartSeriesMetadata
 from src.api.services.global_flows import build_global_flows_insights, build_global_flows_summary
 from src.etl.prepare_datasets.global_flows import prepare_global_flows_kpis
-from src.utilities.config_loader import load_config
+from src.utilities.config_loader import load_config, resolve_metric_label
 
 
 ORDER = ("GF1", "GF2", "GF3")
@@ -54,7 +54,7 @@ def build_global_flows_response(conn: sqlite3.Connection) -> GlobalFlowsResponse
     for chart in ORDER:
         cfg = config[chart]; metrics = list(cfg.get("metrics", [])); optional = list(cfg.get("optional_metrics", [])); all_metrics = metrics + optional
         labels = cfg.get("metric_labels", {}); units = cfg.get("units", {}); roles = cfg.get("roles", {}); axes = cfg.get("axes", {})
-        metadata = [ChartSeriesMetadata(metric=metric, label=labels.get(metric, metric), unit=units.get(metric, "Index"), role=roles.get(metric, "line"), axis=axes.get(metric, "left"), display_order=index, optional=metric in optional) for index, metric in enumerate(all_metrics, start=1)]
+        metadata = [ChartSeriesMetadata(metric=metric, label=resolve_metric_label(metric, labels), unit=units.get(metric, "Index"), role=roles.get(metric, "line"), axis=axes.get(metric, "left"), display_order=index, optional=metric in optional) for index, metric in enumerate(all_metrics, start=1)]
         baseline = None
         if "baseline_date" in datasets[chart] and not datasets[chart]["baseline_date"].dropna().empty: baseline = pd.to_datetime(datasets[chart]["baseline_date"].dropna().iloc[0]).date().isoformat()
         charts.append(GlobalFlowsChart(id=chart, title=cfg["name"], description=cfg["description"], frequency=cfg["frequency"], chart_type=cfg["chart_type"], series_metadata=metadata, records=_records(datasets[chart], all_metrics), insight=ChartInsight(**insights[chart]) if chart in insights else None, coverage=_coverage(datasets[chart], all_metrics), baseline_date=baseline))

@@ -194,24 +194,23 @@ def render_dashboard_navigation() -> None:
     ]
 
     for row_start in range(0, len(nav_items), 3):
-        columns = st.columns(3)
-        for column, item in zip(columns, nav_items[row_start:row_start + 3]):
+        row_items = nav_items[row_start:row_start + 3]
+        columns = st.columns(len(row_items))
+        for column, item in zip(columns, row_items):
             title, description, page_path, action, key = item
-            status_class = "home-nav-card__status--active"
 
             with column:
-                st.markdown(
-                    (
-                        '<article class="home-nav-card">'
-                        f"<h3>{escape(title)}</h3>"
-                        f"<p>{escape(description)}</p>"
-                        f'<div class="home-nav-card__status {status_class}">Available</div>'
-                        "</article>"
-                    ),
-                    unsafe_allow_html=True,
-                )
-                if st.button(action, key=key):
-                    st.switch_page(page_path)
+                with st.container(border=True):
+                    st.markdown(
+                        (
+                            '<div class="home-nav-card">'
+                            f"<h3>{escape(title)}</h3>"
+                            f"<p>{escape(description)}</p>"
+                            "</div>"
+                        ),
+                        unsafe_allow_html=True,
+                    )
+                    st.page_link(page_path, label=action)
 
 
 def render_data_note() -> None:

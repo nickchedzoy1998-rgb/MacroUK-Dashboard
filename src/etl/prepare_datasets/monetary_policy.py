@@ -10,10 +10,11 @@ import pandas as pd
 
 from src.analytics.chart_transforms import coverage_report, prepare_time_series
 from src.utilities.config_loader import load_config
+from src.database.database_manager import configured_database_path
 
 
 DATABASE = load_config("settings", "databases", "economics_db")
-DB_PATH = Path("data") / f"{DATABASE}.db"
+DB_PATH = configured_database_path()
 
 MP1_REQUIRED = ("BANK_RATE_DA", "SONIA")
 MP1_OPTIONAL = ("ETF_UK_GILT_close",)

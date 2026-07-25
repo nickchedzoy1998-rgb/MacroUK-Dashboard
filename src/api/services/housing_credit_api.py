@@ -12,7 +12,7 @@ from src.api.schemas.housing_credit import HousingCreditChart, HousingCreditKPI,
 from src.api.schemas.macro_pulse import ChartCoverage, ChartInsight, ChartRecord, ChartSeriesMetadata
 from src.api.services.housing_credit import build_housing_credit_insights, build_housing_credit_summary
 from src.etl.prepare_datasets.housing_credit import prepare_housing_credit_kpis
-from src.utilities.config_loader import load_config
+from src.utilities.config_loader import load_config, resolve_metric_label
 
 
 ORDER = ("HC1", "HC2", "HC3", "HC4")
@@ -57,14 +57,18 @@ def build_housing_credit_response(conn: sqlite3.Connection) -> HousingCreditResp
         cfg = config[chart]
         metrics = list(cfg.get("metrics", [])); optional = list(cfg.get("optional_metrics", [])); all_metrics = metrics + optional
         if chart == "HC2":
-            metrics = [f"{metric}_normalised" for metric in metrics]
+            source_metrics = metrics
+            metrics = [f"{metric}_normalised" for metric in source_metrics]
             all_metrics = metrics
-            labels = {metric: f"{metric.replace('UK_HPI_AVG_PRICE_', '').replace('_normalised', '').replace('_', ' ').title()} (rebased)" for metric in metrics}
+            labels = {
+                f"{metric}_normalised": f"{resolve_metric_label(metric, cfg.get('metric_labels', {}))} (rebased)"
+                for metric in source_metrics
+            }
             units = {metric: "Index" for metric in metrics}
             roles = {metric: "line" for metric in metrics}; axes = {metric: "left" for metric in metrics}
         else:
             labels = cfg.get("metric_labels", {}); units = cfg.get("units", {}); roles = cfg.get("roles", {}); axes = cfg.get("axes", {})
-        metadata = [ChartSeriesMetadata(metric=metric, label=labels.get(metric, metric), unit=units.get(metric, "%"), role=roles.get(metric, "line"), axis=axes.get(metric, "left"), display_order=index, optional=metric in optional) for index, metric in enumerate(all_metrics, start=1)]
+        metadata = [ChartSeriesMetadata(metric=metric, label=resolve_metric_label(metric, labels), unit=units.get(metric, "%"), role=roles.get(metric, "line"), axis=axes.get(metric, "left"), display_order=index, optional=metric in optional) for index, metric in enumerate(all_metrics, start=1)]
         baseline = None
         if chart == "HC2" and not datasets[chart].empty:
             baseline_value = datasets[chart]["baseline_date"].dropna().iloc[0] if "baseline_date" in datasets[chart] else None

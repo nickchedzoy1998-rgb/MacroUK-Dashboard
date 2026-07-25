@@ -7,9 +7,8 @@ from typing import Any
 import streamlit as st
 
 from src.api.dashboard.components.chart_components import build_business_credit_figure, build_money_supply_figure, build_policy_rates_figure, render_plotly_chart
+from src.api.dashboard.data_loader import load_monetary_policy_data
 from src.api.dashboard.components.shared_components import inject_dashboard_styles, render_analytical_page_header, render_chart_insight, render_chart_panel_header, render_data_freshness_note, render_empty_state, render_kpi_strip, render_methodology_note, render_page_summary, render_section_heading
-from src.utilities.build_url import build_chart_endpoint
-from src.utilities.http_client import fetch_json
 
 
 BUILDERS = {"MP1": build_policy_rates_figure, "MP2": build_money_supply_figure, "MP3": build_business_credit_figure}
@@ -24,9 +23,9 @@ def _valid(response: object) -> bool:
 
 def get_response() -> dict[str, Any]:
     try:
-        response = fetch_json(build_chart_endpoint("MonetaryPolicy", "summary"), False)
+        response = load_monetary_policy_data()
     except Exception:
-        st.error("Monetary Policy data could not be loaded. FastAPI or the preparation pipeline may not be running.")
+        st.error("Monetary Policy data could not be loaded from the local warehouse.")
         st.stop()
     if not _valid(response):
         st.error("Monetary Policy returned an invalid response and could not be displayed.")

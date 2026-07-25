@@ -14,7 +14,8 @@ from src.utilities.config_loader import load_config
 from src.api.schemas.macro_pulse import CHART_SCHEMAS
 from src.api.dependencies import get_db_conn
 from src.api.schemas.macro_pulse import MacroPulseResponse
-from src.api.services.macro_pulse_api import MacroPulseDataError, build_macro_pulse_response
+from src.api.services.macro_pulse_api import MacroPulseDataError
+from src.api.services.page_data import get_macro_pulse_page
 
 # Helpers & Configs:
 macropulse_config = load_config('charts', 'MacroPulse')
@@ -25,7 +26,7 @@ logger = logging.getLogger(__name__)
 @router.get("/summary", response_model=MacroPulseResponse)
 def get_macro_pulse_summary(db: sqlite3.Connection = Depends(get_db_conn)) -> MacroPulseResponse:
     try:
-        return build_macro_pulse_response(db)
+        return get_macro_pulse_page(db)
     except MacroPulseDataError:
         logger.error("Macro Pulse prepared data is unavailable")
         raise HTTPException(status_code=503, detail="Macro Pulse data is currently unavailable.")

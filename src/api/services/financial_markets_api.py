@@ -11,7 +11,7 @@ from src.api.schemas.financial_markets import FinancialMarketsChart, FinancialMa
 from src.api.schemas.macro_pulse import ChartCoverage, ChartInsight, ChartRecord, ChartSeriesMetadata
 from src.api.services.financial_markets import build_financial_markets_insights, build_financial_markets_summary
 from src.etl.prepare_datasets.financial_markets import prepare_financial_markets_kpis
-from src.utilities.config_loader import load_config
+from src.utilities.config_loader import load_config, resolve_metric_label
 
 
 ORDER = ("FM1", "FM2", "FM3")
@@ -37,17 +37,26 @@ def _coverage(frame: pd.DataFrame, metrics: list[str]) -> ChartCoverage:
 
 
 def _records(frame: pd.DataFrame, metrics: list[str]) -> list[ChartRecord]:
+    if frame.empty:
+        return []
+
+    prepared = frame.copy()
+    prepared["date"] = pd.to_datetime(prepared.get("date"), errors="coerce")
+    prepared = prepared.dropna(subset=["date"]).copy()
+    if prepared.empty:
+        return []
+
     rows = []
-    for _, row in frame.iterrows():
-        date = pd.to_datetime(row.get("date"), errors="coerce")
-        if pd.isna(date):
-            continue
-        values = {metric: None if metric not in frame or pd.isna(row.get(metric)) else float(row.get(metric)) for metric in metrics}
+    for _, row in prepared.iterrows():
+        values = {}
         for metric in metrics:
+            value = row.get(metric)
+            values[metric] = None if pd.isna(value) else float(value)
             raw_metric = metric.removesuffix("_normalised")
-            if raw_metric in frame:
-                values[raw_metric] = None if pd.isna(row.get(raw_metric)) else float(row.get(raw_metric))
-        rows.append(ChartRecord(date=date.date(), values=values))
+            if raw_metric in prepared.columns:
+                raw_value = row.get(raw_metric)
+                values[raw_metric] = None if pd.isna(raw_value) else float(raw_value)
+        rows.append(ChartRecord(date=pd.Timestamp(row["date"]).date(), values=values))
     return rows
 
 
@@ -64,14 +73,17 @@ def build_financial_markets_response(conn: sqlite3.Connection) -> FinancialMarke
         if chart_id in {"FM1", "FM3"}:
             metrics = [metric for metric in configured if not metric.endswith("_normalised")]
             plotted = [f"{metric}_normalised" for metric in metrics]
-            labels = {f"{metric}_normalised": cfg.get("metric_labels", {}).get(metric, metric) for metric in metrics}
+            labels = {
+                f"{metric}_normalised": resolve_metric_label(metric, cfg.get("metric_labels", {}))
+                for metric in metrics
+            }
             units = {metric: "Index" for metric in plotted}
         else:
             plotted = configured
             labels = cfg.get("metric_labels", {})
             units = cfg.get("units", {})
         roles = cfg.get("roles", {}); axes = cfg.get("axes", {})
-        metadata = [ChartSeriesMetadata(metric=metric, label=labels.get(metric, metric), unit=units.get(metric, "Index"), role=roles.get(metric, "line"), axis=axes.get(metric, "left"), display_order=index, optional=False) for index, metric in enumerate(plotted, start=1)]
+        metadata = [ChartSeriesMetadata(metric=metric, label=resolve_metric_label(metric, labels), unit=units.get(metric, "Index"), role=roles.get(metric, "line"), axis=axes.get(metric, "left"), display_order=index, optional=False) for index, metric in enumerate(plotted, start=1)]
         baseline = None
         if "baseline_date" in datasets[chart_id] and not datasets[chart_id]["baseline_date"].dropna().empty:
             baseline = pd.to_datetime(datasets[chart_id]["baseline_date"].dropna().iloc[0]).date().isoformat()

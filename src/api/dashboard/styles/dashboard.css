@@ -199,6 +199,11 @@
     margin: 0;
 }
 
+div[data-testid="stPlotlyChart"],
+div[data-testid="stPlotlyChart"] > div {
+    max-width: 100%;
+}
+
 @media (max-width: 900px) {
     .dashboard-kpi-strip {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -206,7 +211,15 @@
 }
 
 @media (max-width: 640px) {
+    .dashboard-page-header h1 {
+        font-size: clamp(1.7rem, 8vw, 2.2rem);
+    }
+
     .dashboard-kpi-strip {
         grid-template-columns: 1fr;
+    }
+
+    .dashboard-kpi {
+        min-height: 0;
     }
 }

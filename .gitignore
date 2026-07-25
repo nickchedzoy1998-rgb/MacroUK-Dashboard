@@ -15,6 +15,21 @@ env/
 
 # Ignore generated local databases
 data/*.db
+data/*.db.download
+data/*.db-shm
+data/*.db-wal
+
+# Test, coverage and local environment files
+.pytest_cache/
+.coverage
+htmlcov/
+.env
+.env.*
+!.env.example
+
+# OS/editor output
+.DS_Store
+Thumbs.db
 src/utilities/__pycache__/config_loader.cpython-311.pyc
 src/etl/__pycache__/fetch_ons.cpython-311.pyc
 src/etl/__pycache__/fetch_ons.cpython-311.pyc

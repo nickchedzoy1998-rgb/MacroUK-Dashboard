@@ -13,7 +13,16 @@ def build_ons(metric: str):
 
 
 def build_chart_endpoint(section, chart_id):
-    return f"{base_api_endpoint}/{section.lower()}/{chart_id.lower()}"
+    section_map = {
+        "Home": "home",
+        "MacroPulse": "macropulse",
+        "MonetaryPolicy": "monetary-policy",
+        "HousingCredit": "housing-credit",
+        "FinancialMarkets": "financial-markets",
+        "GlobalFlows": "global-flows",
+    }
+    path_section = section_map.get(section, section.lower())
+    return f"{base_api_endpoint}/{path_section}/{chart_id.lower()}"
 
 
 
